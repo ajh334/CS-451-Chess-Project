@@ -43,10 +43,6 @@ public class BoardGUI {
         };
         tools.add(concedeAction);
         tools.add(drawAction);
-        tools.add(new JButton("Save")); // TODO - add functionality!
-        tools.add(new JButton("Restore")); // TODO - add functionality!
-        tools.addSeparator();
-        tools.add(new JButton("Resign")); // TODO - add functionality!
         tools.addSeparator();
 
         gui.add(new JLabel("?"), BorderLayout.LINE_START);
