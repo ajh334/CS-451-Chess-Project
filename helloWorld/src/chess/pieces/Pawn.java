@@ -16,12 +16,14 @@ import chess.Space;
 public class Pawn extends Piece{
 	private String blackPawnURL = "http://i.imgur.com/l5slgWd.png";
 	private String whitePawnURL = "http://i.imgur.com/UFLmr7M.jpg";
+	private ChessColor color;
 	private Boolean hasMoved = false;
 	private BufferedImage image;
 	private Integer x;
 	private Integer y;
 
 	public Pawn(ChessColor color) {
+		this.color = color;
 		if(color.isWhite()) {
 			BufferedImage bi;
 			try {
@@ -50,10 +52,46 @@ public class Pawn extends Piece{
 	@Override
 	public List<Space> getPossibleMoves(Space[][] spaces) {
 		List<Space> movesList = new ArrayList<Space>();
-		if(!hasMoved) {
+		if(this.color.isWhite()) {
+			movesList = getWhitePossibleMoves(spaces, movesList);
+		} else if (!this.color.isWhite()) {
 			
 		}
-		
+
+		return movesList;
+	}
+	
+	public List<Space> getWhitePossibleMoves(Space[][] spaces, List<Space> movesList) {
+		Space diagonal1 = spaces[this.getY()+1][this.getX()+1];
+		Space diagonal2 = spaces[this.getY()+1][this.getX()-1];
+		if(!hasMoved) {
+			movesList.add(spaces[this.getY()+1][this.getX()]);
+			movesList.add(spaces[this.getY()+2][this.getX()]);
+		} else {
+			movesList.add(spaces[this.getY()+1][this.getX()]);
+		}
+		if(!diagonal1.getPiece().equals(null) && !diagonal1.getPiece().getColor().isWhite()) {
+			movesList.add(diagonal1);
+		} else if (!diagonal2.getPiece().equals(null) && !diagonal2.getPiece().getColor().isWhite()) {
+			movesList.add(diagonal2);
+		}
+		return movesList;
+	}
+	
+	public List<Space> getBlackPossibleMoves(Space[][] spaces, List<Space> movesList) {
+		Space diagonal1 = spaces[this.getY()-1][this.getX()+1];
+		Space diagonal2 = spaces[this.getY()-1][this.getX()-1];
+		if(!hasMoved) {
+			movesList.add(spaces [this.getY()-1] [this.getX()]);
+			movesList.add(spaces [this.getY()-2] [this.getX()]);
+		} else {
+			movesList.add(spaces[this.getY()+1][this.getX()]);
+		}
+		if(!diagonal1.getPiece().equals(null) && diagonal1.getPiece().getColor().isWhite()) {
+			movesList.add(diagonal1);
+		} else if (!diagonal2.getPiece().equals(null) && diagonal2.getPiece().getColor().isWhite()) {
+			movesList.add(diagonal2);
+		}
 		return movesList;
 	}
 

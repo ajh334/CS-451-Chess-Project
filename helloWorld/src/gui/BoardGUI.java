@@ -66,8 +66,8 @@ public class BoardGUI {
                 Component c = getParent();
                 if (c == null) {
                     prefSize = new Dimension(
-                            (int)d.getWidth(),(int)d.getHeight());
-                } else if (c!=null && c.getWidth()>d.getWidth() && c.getHeight()>d.getHeight()) {
+                            (int) d.getWidth(), (int) d.getHeight());
+                } else if (c != null && c.getWidth() > d.getWidth() && c.getHeight() > d.getHeight()) {
                     prefSize = c.getSize();
                 } else {
                     prefSize = d;
@@ -121,8 +121,12 @@ public class BoardGUI {
     }
     
     public void populateBoard(Space[][] spaces) {
+    	populateWhitePieces(spaces);
+    	populateBlackPieces(spaces);
+    }
+    
+    public void populateWhitePieces(Space[][] spaces) {
 		boolean white = true;
-		boolean black = false;
     	for (int i = 0; i < 2; i++) {
     		for (int j=0; j < 8; j++) {
     			if(i == 0) {
@@ -138,6 +142,10 @@ public class BoardGUI {
     			}
     		}
     	}
+    }
+    
+    public void populateBlackPieces(Space[][] spaces) {
+		boolean black = false;
     	for (int i = 6; i < 8; i++) {
     		for (int j=0; j < 8; j++) {
     			if(i == 6) {
