@@ -120,6 +120,10 @@ public class BoardGUI {
     	return gui;
     }
     
+    public final JButton[][] getSpaces() {
+    	return spaces;
+    }
+    
     
    public void fillBoard() {
 	   
