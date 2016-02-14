@@ -18,6 +18,7 @@ public class Pawn extends Piece{
 	private String whitePawnURL = "http://i.imgur.com/UFLmr7M.jpg";
 	private ChessColor color;
 	private Boolean hasMoved = false;
+	private Boolean enPassantPossible = false;
 	private BufferedImage image;
 	private Integer x;
 	private Integer y;
@@ -55,43 +56,96 @@ public class Pawn extends Piece{
 		if(this.color.isWhite()) {
 			movesList = getWhitePossibleMoves(spaces, movesList);
 		} else if (!this.color.isWhite()) {
-			
+			movesList = getBlackPossibleMoves(spaces, movesList);
 		}
 
 		return movesList;
 	}
 	
 	public List<Space> getWhitePossibleMoves(Space[][] spaces, List<Space> movesList) {
+		Space forward1 = spaces [this.getY()+1] [this.getX()];
+		Space forward2 = spaces [this.getY()+2] [this.getX()];
 		Space diagonal1 = spaces[this.getY()+1][this.getX()+1];
 		Space diagonal2 = spaces[this.getY()+1][this.getX()-1];
+		Space lateral1 = spaces[this.getY()][this.getX()+1];
+		Space lateral2 = spaces[this.getY()][this.getX()-1];
 		if(!hasMoved) {
-			movesList.add(spaces[this.getY()+1][this.getX()]);
-			movesList.add(spaces[this.getY()+2][this.getX()]);
+			if(forward1.getPiece().equals(null)) {
+				movesList.add(forward1);
+				if(forward2.getPiece().equals(null)) {
+					movesList.add(forward2);
+				}
+			}
+				
 		} else {
 			movesList.add(spaces[this.getY()+1][this.getX()]);
 		}
 		if(!diagonal1.getPiece().equals(null) && !diagonal1.getPiece().getColor().isWhite()) {
 			movesList.add(diagonal1);
-		} else if (!diagonal2.getPiece().equals(null) && !diagonal2.getPiece().getColor().isWhite()) {
+		}
+		if (!diagonal2.getPiece().equals(null) && !diagonal2.getPiece().getColor().isWhite()) {
 			movesList.add(diagonal2);
 		}
+		
+		if(!lateral1.getPiece().equals(null)
+				&& !lateral1.getPiece().getColor().isWhite()
+				&& lateral1.getPiece().getClass().equals(this)) {
+			Pawn temp = (Pawn) lateral1.getPiece();
+			if(temp.getEnPassantPossible()) {
+				movesList.add(lateral1);
+			}
+		}
+		if(!lateral2.getPiece().equals(null)
+				&& !lateral2.getPiece().getColor().isWhite()
+				&& lateral2.getPiece().getClass().equals(this)) {
+			Pawn temp = (Pawn) lateral2.getPiece();
+			if(temp.getEnPassantPossible()) {
+				movesList.add(lateral1);
+			}
+		} 
 		return movesList;
 	}
 	
 	public List<Space> getBlackPossibleMoves(Space[][] spaces, List<Space> movesList) {
+		Space forward1 = spaces [this.getY()-1] [this.getX()];
+		Space forward2 = spaces [this.getY()-2] [this.getX()];
 		Space diagonal1 = spaces[this.getY()-1][this.getX()+1];
 		Space diagonal2 = spaces[this.getY()-1][this.getX()-1];
+		Space lateral1 = spaces[this.getY()][this.getX()+1];
+		Space lateral2 = spaces[this.getY()][this.getX()-1];
 		if(!hasMoved) {
-			movesList.add(spaces [this.getY()-1] [this.getX()]);
-			movesList.add(spaces [this.getY()-2] [this.getX()]);
+			if(forward1.getPiece().equals(null)) {
+				movesList.add(forward1);
+				if(forward2.getPiece().equals(null)) {
+					movesList.add(forward2);
+				}
+			}
+				
 		} else {
 			movesList.add(spaces[this.getY()+1][this.getX()]);
 		}
 		if(!diagonal1.getPiece().equals(null) && diagonal1.getPiece().getColor().isWhite()) {
 			movesList.add(diagonal1);
-		} else if (!diagonal2.getPiece().equals(null) && diagonal2.getPiece().getColor().isWhite()) {
+		}
+		if (!diagonal2.getPiece().equals(null) && diagonal2.getPiece().getColor().isWhite()) {
 			movesList.add(diagonal2);
 		}
+		if(!lateral1.getPiece().equals(null)
+				&& lateral1.getPiece().getColor().isWhite()
+				&& lateral1.getPiece().getClass().equals(this)) {
+			Pawn temp = (Pawn) lateral1.getPiece();
+			if(temp.getEnPassantPossible()) {
+				movesList.add(lateral1);
+			}
+		}
+		if(!lateral2.getPiece().equals(null)
+				&& lateral2.getPiece().getColor().isWhite()
+				&& lateral2.getPiece().getClass().equals(this)) {
+			Pawn temp = (Pawn) lateral2.getPiece();
+			if(temp.getEnPassantPossible()) {
+				movesList.add(lateral1);
+			}
+		} 
 		return movesList;
 	}
 
@@ -125,5 +179,13 @@ public class Pawn extends Piece{
 
 	public void setImage(BufferedImage image) {
 		this.image = image;
+	}
+
+	public Boolean getEnPassantPossible() {
+		return enPassantPossible;
+	}
+
+	public void setEnPassantPossible(Boolean enPassantPossible) {
+		this.enPassantPossible = enPassantPossible;
 	}
 }
