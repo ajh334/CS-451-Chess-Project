@@ -12,8 +12,10 @@ public class HelloWorld {
         Runnable r = new Runnable() {
 
             @Override
-            public void run() {
-                BoardGUI gui = new BoardGUI();
+            public void run() 
+            {
+            	GUI gui = new LoginGUI();
+                //BoardGUI gui = new BoardGUI();
 
                 f = new JFrame("Chess Champ");
                 //f.add(gui.getGUI());
@@ -22,7 +24,7 @@ public class HelloWorld {
                 f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 // See http://stackoverflow.com/a/7143398/418556 for demo.
                 f.setLocationByPlatform(true);
-                f.setContentPane(new LoginGUI());
+                f.setContentPane(gui.getPanel());
 
                 // ensures the frame is the minimum size it needs to be
                 // in order display the components within it

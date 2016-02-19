@@ -20,7 +20,7 @@ public class LoginGUI implements GUI
 {
 	static JFrame frameMenu = new JFrame("Chess Champ");
 	
-	private JPanel panel;
+	private LoginPanel panel;
 
  public LoginGUI()
 {
@@ -34,28 +34,38 @@ public JPanel getPanel()
 }
 
 @Override
-public void getButton(String s) 
+public JButton getButton(String s) 
 {
-	panel.getButton();
+	switch(s.toLowerCase().trim())
+	{
+	case "login": return panel.getLoginButton();
+	}
+	System.out.println("error: no button found with that tag");
+	return null;
+}
+
+@Override
+public JTextField getText(String s) 
+{
+	switch(s.toLowerCase().trim())
+	{
+	case "username": return panel.getUsernameTextField();
+	}
+	System.out.println("error: no button found with that tag");
+	return null;
 	
 }
 
 @Override
-public void getText(JTextField t) {
-	// TODO Auto-generated method stub
-	
+public JLabel getLabel(String s) 
+{
+	switch(s.toLowerCase().trim())
+	{
+	case "username": return panel.getWelcomeLabel();
+	}
+	System.out.println("error: no button found with that tag");
+	return null;
 }
 
-@Override
-public void getLabel(JLabel l) {
-	// TODO Auto-generated method stub
-	
-}
-
-@Override
-public void getPic(JLabel p) {
-	// TODO Auto-generated method stub
-	
-}
  
 }

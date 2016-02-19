@@ -90,6 +90,21 @@ public class LoginPanel extends JPanel
    username = addText(option, 20, Color.BLACK, Color.WHITE);
    login = addButton(option, "Login", "Click here to login", new LoginListener());
 }
+ 
+ public JButton getLoginButton()
+ {
+	 return login;
+ }
+ 
+ public JTextField getUsernameTextField()
+ {
+	 return username;
+ }
+ 
+ public JLabel getWelcomeLabel()
+ {
+	 return welcome;
+ }
    
  private class LoginListener implements ActionListener
 {

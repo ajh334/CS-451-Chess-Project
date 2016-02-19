@@ -9,8 +9,8 @@ import javax.swing.*;
 public interface GUI
 {
 	public JPanel getPanel();
-	public void getButton(JButton b);	
-	public void getText(JTextField t);
-	public void getLabel(JLabel l);
-	public void getPic(JLabel p);
+	public JButton getButton(String s);	
+	public JTextField getText(String s);
+	public JLabel getLabel(String s);
+	//public JLabel getPic(String s);
 }
