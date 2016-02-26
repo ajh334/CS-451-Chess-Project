@@ -12,6 +12,7 @@ import chess.ChessColor;
 public class Knight extends Piece {
 	private String blackKnightURL = "https://upload.wikimedia.org/wikipedia/commons/e/ef/Chess_ndt45.svg";
 	private String whiteKnightURL = "https://upload.wikimedia.org/wikipedia/commons/7/70/Chess_nlt45.svg";
+	private String pieceName = "H";
 	Knight(ChessColor color) {
 		Image image;
 		if(color.isWhite()) {

@@ -6,9 +6,9 @@ import javax.swing.JButton;
 import chess.pieces.Piece;
 
 public class Space extends JButton{
-	public Piece piece;
-	public Integer xCoord;
-	public Integer yCoord;
+	protected Piece piece;
+	protected Integer xCoord;
+	protected Integer yCoord;
 	
 	public Piece getPiece() {
 		return piece;

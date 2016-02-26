@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -17,6 +19,7 @@ import chess.pieces.Piece;
 public class BoardGUI {
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private Space[][] spaces = new Space[8][8];
+    private Integer[][] currentBoardState = new Integer[8][8];
     private JPanel chessBoard;
     private final int WHITE_START_ROW = 0;
     private final int BLACK_START_ROW = 7;
@@ -166,7 +169,8 @@ public class BoardGUI {
     public final JComponent getGUI() {
     	return gui;
     }
-    public final JButton[][] getSpaces() {
+    
+    public final Space[][] getSpaces() {
     	return spaces;
     }
 }

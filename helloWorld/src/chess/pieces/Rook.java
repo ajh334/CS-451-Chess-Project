@@ -12,6 +12,7 @@ import chess.ChessColor;
 public class Rook extends Piece {
 	private String blackRookURL = "https://upload.wikimedia.org/wikipedia/commons/f/ff/Chess_rdt45.svg";
 	private String whiteRookURL = "https://upload.wikimedia.org/wikipedia/commons/7/72/Chess_rlt45.svg";
+	private String pieceName = "R";
 	Rook(ChessColor color) {
 		Image image;
 		if(color.isWhite()) {

@@ -9,6 +9,7 @@ import chess.Space;
 
 public class Piece {
 	private ChessColor color;
+	private String pieceName;
 	private BufferedImage image;
 	private Integer x;
 	private Integer y;
@@ -47,5 +48,13 @@ public class Piece {
 
 	public void setY(Integer y) {
 		this.y = y;
+	}
+
+	public String getPieceName() {
+		return pieceName;
+	}
+
+	public void setPieceName(String pieceName) {
+		this.pieceName = pieceName;
 	}
 }

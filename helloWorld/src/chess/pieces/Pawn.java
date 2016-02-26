@@ -16,6 +16,7 @@ import chess.Space;
 public class Pawn extends Piece{
 	private String blackPawnURL = "http://i.imgur.com/l5slgWd.png";
 	private String whitePawnURL = "http://i.imgur.com/UFLmr7M.jpg";
+	private String pieceName = "P";
 	private ChessColor color;
 	private Boolean hasMoved = false;
 	private Boolean enPassantPossible = false;
@@ -145,7 +146,7 @@ public class Pawn extends Piece{
 			if(temp.getEnPassantPossible()) {
 				movesList.add(lateral1);
 			}
-		} 
+		}
 		return movesList;
 	}
 

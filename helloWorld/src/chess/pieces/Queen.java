@@ -12,6 +12,7 @@ import chess.ChessColor;
 public class Queen extends Piece {
 	private String blackQueenURL = "https://upload.wikimedia.org/wikipedia/commons/4/47/Chess_qdt45.svg";
 	private String whiteQueenURL = "https://upload.wikimedia.org/wikipedia/commons/1/15/Chess_qlt45.svg";
+	private String pieceName = "Q";
 	Queen(ChessColor color) {
 		Image image;
 		if(color.isWhite()) {

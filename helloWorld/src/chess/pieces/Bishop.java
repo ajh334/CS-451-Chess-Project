@@ -13,6 +13,7 @@ public class Bishop extends Piece {
 	
 	private String blackBishopURL = "https://upload.wikimedia.org/wikipedia/commons/9/98/Chess_bdt45.svg";
 	private String whiteBishopURL = "https://upload.wikimedia.org/wikipedia/commons/b/b1/Chess_blt45.svg";
+	private String pieceName = "B";
 	Bishop(ChessColor color) {
 		Image image;
 		if(color.isWhite()) {
