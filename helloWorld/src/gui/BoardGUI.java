@@ -12,9 +12,11 @@ import javax.swing.border.*;
 
 import chess.ChessBoard;
 import chess.ChessColor;
+import chess.MoveValidation;
 import chess.Space;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
+import chess.pieces.Queen;
 
 public class BoardGUI {
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
@@ -111,6 +113,17 @@ public class BoardGUI {
                 } else {
                     b.setBackground(Color.DARK_GRAY);
                 }
+                b.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						if(b.getPiece() != null) {
+					    	ArrayList<Integer[]> moveList = new ArrayList<Integer[]>();
+					    	MoveValidation mv = new MoveValidation();
+					    	moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, b.getPiece());
+					    	highlightButtons(moveList);
+						}
+					}
+				});
                 spaces[j][i] = b;
             }
         }
@@ -124,23 +137,23 @@ public class BoardGUI {
     }
     
     public void populateBoard(Space[][] spaces) {
-    	populateWhitePieces(spaces);
     	populateBlackPieces(spaces);
+    	populateWhitePieces(spaces);
     }
     
     public void populateWhitePieces(Space[][] spaces) {
 		boolean white = true;
-    	for (int i = 0; i < 2; i++) {
+    	for (int i = 6; i < 8; i++) {
     		for (int j=0; j < 8; j++) {
-    			if(i == 0) {
+    			if(i == 7) {
     				Space temp = spaces[j][i];
     				ChessColor color = new ChessColor(white);
-    				Piece piece = new Pawn(color);
+    				Pawn piece = new Pawn(color, j, i);
     				temp.setPiece(piece);
-    			} else if (i == 1) {
+    			} else if (i == 6) {
     				Space temp = spaces[j][i];
     				ChessColor color = new ChessColor(white);
-    				Piece piece = new Pawn(color);
+    				Pawn piece = new Pawn(color, j, i);
     				temp.setPiece(piece);
     			}
     		}
@@ -149,21 +162,31 @@ public class BoardGUI {
     
     public void populateBlackPieces(Space[][] spaces) {
 		boolean black = false;
-    	for (int i = 6; i < 8; i++) {
+    	for (int i = 0; i < 2; i++) {
     		for (int j=0; j < 8; j++) {
-    			if(i == 6) {
+    			if(i == 1) {
+        			Space temp = spaces[j][i];
+        			ChessColor color = new ChessColor(black);
+        			Piece piece = new Pawn(color, j, i);
+        			temp.setPiece(piece);
+    			} else if (i == 0) {
     				Space temp = spaces[j][i];
     				ChessColor color = new ChessColor(black);
-    				Piece piece = new Pawn(color);
-    				temp.setPiece(piece);
-    			} else if (i == 7) {
-    				Space temp = spaces[j][i];
-    				ChessColor color = new ChessColor(black);
-    				Piece piece = new Pawn(color);
+    				Piece piece = new Pawn(color, j, i);
     				temp.setPiece(piece);
     			}
     		}
     	}
+    }
+    
+    public void highlightButtons(ArrayList<Integer[]> moveList) {
+    	for(int i = 0; i < moveList.size(); i++) {
+    		Integer[] spaceCoord = moveList.get(i);
+    		Integer x = spaceCoord[0];
+    		Integer y = spaceCoord[1];
+    		Space space = spaces[y][x];
+    		space.setBackground(Color.CYAN);
+    		}
     }
     
     public final JComponent getGUI() {

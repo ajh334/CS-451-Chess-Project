@@ -1,5 +1,8 @@
 package chess;
 
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -30,6 +33,12 @@ public class Space extends JButton{
 		this.yCoord = yCoord;
 	}
 	
+	public Boolean isPiece() {
+		if(piece == null) {
+			return false;
+		}
+		return true;
+	}
 
 	
 }

@@ -8,15 +8,11 @@ import chess.ChessColor;
 import chess.Space;
 
 public class Piece {
-	private ChessColor color;
-	private String pieceName;
-	private BufferedImage image;
-	private Integer x;
-	private Integer y;
-	
-	public List<Space> getPossibleMoves(Space[][] spaces) {
-		return null;
-	}
+	protected ChessColor color;
+	protected String pieceName;
+	protected BufferedImage image;
+	protected Integer x;
+	protected Integer y;
 
 	public ChessColor getColor() {
 		return color;
