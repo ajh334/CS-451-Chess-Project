@@ -14,6 +14,7 @@ import chess.Space;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
 import test.HelloWorld;
+import java.sql.*;
 
 
 public class LoginGUI implements GUI
@@ -21,6 +22,7 @@ public class LoginGUI implements GUI
 	static JFrame frameMenu = new JFrame("Chess Champ");
 	
 	private LoginPanel panel;
+	private Connection con = null;
 
  public LoginGUI()
 {
@@ -67,5 +69,9 @@ public JLabel getLabel(String s)
 	return null;
 }
 
- 
+public Boolean checkLogin()
+{
+	return false;
+}
+
 }
