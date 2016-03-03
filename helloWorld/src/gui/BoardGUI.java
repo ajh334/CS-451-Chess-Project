@@ -25,6 +25,8 @@ public class BoardGUI {
     private JPanel chessBoard;
     private final int WHITE_START_ROW = 0;
     private final int BLACK_START_ROW = 7;
+    private ArrayList<Integer[]> highlightedSpaces;
+    private Boolean whiteTurn = true;
     
     public BoardGUI() {
     	initializeBoardGui();
@@ -38,6 +40,7 @@ public class BoardGUI {
         JToolBar tools = new JToolBar();
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
+        highlightedSpaces = new ArrayList<Integer[]>();
         Action concedeAction = new AbstractAction("Concede") {
 
             @Override
@@ -97,18 +100,19 @@ public class BoardGUI {
 
         // create the chess board squares
         Insets buttonMargin = new Insets(0, 0, 0, 0);
-        for (int i = 0; i < spaces.length; i++) {
-            for (int j = 0; j < spaces[i].length; j++) {
+        for (int x = 0; x < spaces.length; x++) {
+            for (int y = 0; y < spaces[x].length; y++) {
                 Space b = new Space();
-                b.setxCoord(i);
-                b.setyCoord(j);
+                b.setText(x + " " + y);
+                b.setxCoord(x);
+                b.setyCoord(y);
                 b.setMargin(buttonMargin);
                 // our chess pieces are 64x64 px in size, so we'll
                 // 'fill this in' using a transparent icon..
                 ImageIcon icon = new ImageIcon(
                         new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);
-                if ((j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0)) {
+                if ((y % 2 == 1 && x % 2 == 1) || (y % 2 == 0 && x % 2 == 0)) {
                     b.setBackground(Color.WHITE);
                 } else {
                     b.setBackground(Color.DARK_GRAY);
@@ -117,14 +121,11 @@ public class BoardGUI {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						if(b.getPiece() != null) {
-					    	ArrayList<Integer[]> moveList = new ArrayList<Integer[]>();
-					    	MoveValidation mv = new MoveValidation();
-					    	moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, b.getPiece());
-					    	highlightButtons(moveList);
+							addHighlightListener(b);
 						}
 					}
 				});
-                spaces[j][i] = b;
+                spaces[x][y] = b;
             }
         }
 
@@ -179,15 +180,73 @@ public class BoardGUI {
     	}
     }
     
-    public void highlightButtons(ArrayList<Integer[]> moveList) {
+    public void highlightButtons(ArrayList<Integer[]> moveList, Piece piece) {
     	for(int i = 0; i < moveList.size(); i++) {
     		Integer[] spaceCoord = moveList.get(i);
     		Integer x = spaceCoord[0];
     		Integer y = spaceCoord[1];
-    		Space space = spaces[y][x];
+    		Space space = spaces[x][y];
     		space.setBackground(Color.CYAN);
-    		}
+    		space.addActionListener(new ActionListener() {
+    			@Override
+				public void actionPerformed(ActionEvent arg0) {
+    				movePiece(piece, x, y);
+    			}
+    		});
+    	}
+    	highlightedSpaces = moveList;
     }
+    
+    
+    public void deHighlightButtons() { 
+    	for(int i = 0; i < highlightedSpaces.size(); i++) {
+    		Integer[] spaceCoord = highlightedSpaces.get(i);
+    		Integer x = spaceCoord[0];
+    		Integer y = spaceCoord[1];
+    		Space space = spaces[x][y];
+            if ((y % 2 == 1 && x % 2 == 1) || (y % 2 == 0 && x % 2 == 0)) {
+            	space.setBackground(Color.WHITE);
+            } else {
+            	space.setBackground(Color.DARK_GRAY);
+            }
+            space.removeAllActionListeners();
+            space.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					if(space.getPiece() != null) {
+						addHighlightListener(space);
+					}
+				}
+            });
+    	}
+    }
+    
+    public void addHighlightListener(Space b) {
+    	ArrayList<Integer[]> moveList = new ArrayList<Integer[]>();
+    	MoveValidation mv = new MoveValidation();
+    	moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, b.getPiece());
+    	deHighlightButtons();
+    	highlightButtons(moveList, b.getPiece());
+    }
+    
+    public void movePiece(Piece piece, Integer x, Integer y) {
+    	Integer pieceX = piece.getX();
+    	Integer pieceY = piece.getY();
+    	deHighlightButtons();
+    	spaces[pieceX][pieceY].deletePiece();
+    	piece.setX(x);
+    	piece.setY(y);
+    	spaces[x][y].setPiece(piece);
+    	spaces[x][y].addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				movePiece(piece, x, y);
+			}
+		});
+    	this.whiteTurn = !this.whiteTurn;
+    }
+    
+    
     
     public final JComponent getGUI() {
     	return gui;

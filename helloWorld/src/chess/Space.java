@@ -1,5 +1,6 @@
 package chess;
 
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
@@ -20,6 +21,10 @@ public class Space extends JButton{
 		this.setIcon(new ImageIcon(piece.getImage()));
 		this.piece = piece;
 	}
+	public void deletePiece() {
+		this.setIcon(null);
+		this.piece = null;
+	}
 	public Integer getxCoord() {
 		return xCoord;
 	}
@@ -38,6 +43,13 @@ public class Space extends JButton{
 			return false;
 		}
 		return true;
+	}
+	
+	public void removeAllActionListeners() {
+		for(ActionListener al : this.getActionListeners()) {
+			this.removeActionListener(al);
+		}
+			
 	}
 
 	
