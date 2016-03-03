@@ -3,6 +3,7 @@ package chess;
 import java.util.ArrayList;
 import java.util.List;
 
+import chess.pieces.Bishop;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
 
@@ -36,48 +37,50 @@ public class MoveValidation {
 	public List<Integer[]> getPossibleMovesPawn(Space[][] spaces, Piece piece, List<Integer[]> movesList) {
 		Pawn pawn = (Pawn) piece;
 		if(piece.getColor().isWhite()) {
-			movesList = getWhitePossibleMoves(spaces, movesList, pawn);
+			movesList = getWhitePawnPossibleMoves(spaces, movesList, pawn);
 		} else if (!piece.getColor().isWhite()) {
-			movesList = getBlackPossibleMoves(spaces, movesList, pawn);
+			movesList = getBlackPawnPossibleMoves(spaces, movesList, pawn);
 		}
 		return movesList;
 	}
 	
-	public List<Integer[]> getWhitePossibleMoves(Space[][] spaces, List<Integer[]> movesList, Pawn pawn) {
+	public List<Integer[]> getWhitePawnPossibleMoves(Space[][] spaces, List<Integer[]> movesList, Pawn pawn) {
 		Integer y1 = pawn.getY()-1;
 		Integer y3 = pawn.getY();
 		Integer x1 = pawn.getX()-1;
 		Integer x2 = pawn.getX()+1;
 		Integer x3 = pawn.getX();
-		Space forward1 = spaces [x3][y1];
+
 		String pawnString = "P";
 		Integer[] temp = new Integer[2];
 		
 
-		
-		if(!forward1.isPiece()) {
-			temp[0] = y1;
-			temp[1] = x3;
-			movesList.add(temp);
-			if(!pawn.getHasMoved()) {
-				Integer y2 = pawn.getY()-2;
-				Space forward2 = spaces [x3] [y2];
-				if( !forward2.isPiece()) {
-					temp = new Integer[2];
-					temp[0] = y2;
-					temp[1] = x3;
-					movesList.add(temp);
+		if (y1 >= 0) {
+			Space forward1 = spaces[x3][y1];
+			if (!forward1.isPiece()) {
+				temp[0] = x3;
+				temp[1] = y1;
+				movesList.add(temp);
+				if (!pawn.getHasMoved()) {
+					Integer y2 = pawn.getY() - 2;
+					Space forward2 = spaces[x3][y2];
+					if (!forward2.isPiece()) {
+						temp = new Integer[2];
+						temp[0] = x3;
+						temp[1] = y2;
+						movesList.add(temp);
+					}
 				}
 			}
 		}
 		
-		if (x1 >= 0) { 
-			Space diagonal2 = spaces[y1][x1];
-			Space lateral2 = spaces[y3][x1];
+		if (x1 >= 0 && y1 >= 0) { 
+			Space diagonal2 = spaces[x1][y1];
+			Space lateral2 = spaces[x1][y3];
 			if (diagonal2.isPiece() && !diagonal2.getPiece().getColor().isWhite()) {
 				temp = new Integer[2];
-				temp[0] = y1;
-				temp[1] = x1;
+				temp[0] = x1;
+				temp[1] = y1;
 				movesList.add(temp);
 			}
 			
@@ -88,20 +91,20 @@ public class MoveValidation {
 				Pawn tempPawn = (Pawn) lateral2.getPiece();
 				if(tempPawn.getEnPassantPossible()) {
 					temp = new Integer[2];
-					temp[0] = y1;
-					temp[1] = x1;
+					temp[0] = x1;
+					temp[1] = y1;
 					movesList.add(temp);
 				}
 			} 
 		}
 		
-		if (x2 <= 7) {
-			Space diagonal1 = spaces[y1][x2];
-			Space lateral1 = spaces[y3][x2];
+		if (x2 <= 7 && y1 >= 0) {
+			Space diagonal1 = spaces[x2][y1];
+			Space lateral1 = spaces[x2][y3];
 			if(diagonal1.isPiece() && !diagonal1.getPiece().getColor().isWhite()) {
 				temp = new Integer[2];
-				temp[0] = y1;
-				temp[1] = x2;
+				temp[0] = x2;
+				temp[1] = y1;
 				movesList.add(temp);
 			}
 			if(lateral1.isPiece()
@@ -110,8 +113,8 @@ public class MoveValidation {
 				Pawn tempPawn = (Pawn) lateral1.getPiece();
 				if(tempPawn.getEnPassantPossible()) {
 					temp = new Integer[2];
-					temp[0] = y1;
-					temp[1] = x2;
+					temp[0] = x2;
+					temp[1] = y1;
 					movesList.add(temp);
 				}
 			}
@@ -120,39 +123,41 @@ public class MoveValidation {
 		return movesList;
 	}
 	
-	public List<Integer[]> getBlackPossibleMoves(Space[][] spaces, List<Integer[]> movesList, Pawn pawn) {
+	public List<Integer[]> getBlackPawnPossibleMoves(Space[][] spaces, List<Integer[]> movesList, Pawn pawn) {
 		Integer y1 = pawn.getY()+1;
 		Integer y2 = pawn.getY()+2;
 		Integer y3 = pawn.getY();
 		Integer x1 = pawn.getX()-1;
 		Integer x2 = pawn.getX()+1;
 		Integer x3 = pawn.getX();
-		Space forward1 = spaces[x3][y1];
 		String pawnString = pawn.getPieceName();
 		Integer[] temp = new Integer[2];
 		
-		if(!forward1.isPiece()) {
-			temp[0] = y1;
-			temp[1] = x3;
-			movesList.add(temp);
-			if(!pawn.getHasMoved()) {
-				Space forward2 = spaces [x3][y2];
-				if(!forward2.isPiece()) {
-					temp = new Integer[2];
-					temp[0] = y2;
-					temp[1] = x3;
-					movesList.add(temp);
+		if (y1 <= 7) {
+			Space forward1 = spaces[x3][y1];
+			if (!forward1.isPiece()) {
+				temp[0] = x3;
+				temp[1] = y1;
+				movesList.add(temp);
+				if (!pawn.getHasMoved()) {
+					Space forward2 = spaces[x3][y2];
+					if (!forward2.isPiece()) {
+						temp = new Integer[2];
+						temp[0] = x3;
+						temp[1] = y2;
+						movesList.add(temp);
+					}
 				}
 			}
 		}
 
-		if(x1 >= 0) {
-			Space diagonal2 = spaces[y1][x1];
-			Space lateral2 = spaces[y3][x1];
+		if(x1 >= 0 && y1 <= 7) {
+			Space diagonal2 = spaces[x1][y1];
+			Space lateral2 = spaces[x1][y3];
 			if (diagonal2.isPiece() && diagonal2.getPiece().getColor().isWhite()) {
 				temp = new Integer[2];
-				temp[0] = y1;
-				temp[1] = x1;
+				temp[0] = x1;
+				temp[1] = y1;
 				movesList.add(temp);
 			}
 			
@@ -162,20 +167,20 @@ public class MoveValidation {
 				Pawn tempPawn = (Pawn) lateral2.getPiece();
 				if(tempPawn.getEnPassantPossible()) {
 					temp = new Integer[2];
-					temp[0] = y1;
-					temp[1] = x1;
+					temp[0] = x1;
+					temp[1] = y1;
 					movesList.add(temp);
 				}
 			}
 		}
-		if(7 >= x2) {
-			Space diagonal1 = spaces[y1][x2];
-			Space lateral1 = spaces[y3][x2];
+		if(7 >= x2 && y1 <= 7) {
+			Space diagonal1 = spaces[x2][y1];
+			Space lateral1 = spaces[x2][y3];
 			
-			if(diagonal1.isPiece() && !diagonal1.getPiece().getColor().isWhite()) {
+			if(diagonal1.isPiece() && diagonal1.getPiece().getColor().isWhite()) {
 				temp = new Integer[2];
-				temp[0] = y1;
-				temp[1] = x2;
+				temp[0] = x2;
+				temp[1] = y1;
 				movesList.add(temp);
 			}
 
@@ -185,8 +190,8 @@ public class MoveValidation {
 				Pawn tempPawn = (Pawn) lateral1.getPiece();
 				if(tempPawn.getEnPassantPossible()) {
 					temp = new Integer[2];
-					temp[0] = y1;
-					temp[1] = x2;
+					temp[0] = x2;
+					temp[1] = y1;
 					movesList.add(temp);
 				}
 			}
@@ -198,30 +203,244 @@ public class MoveValidation {
 	}
 	
 	
-
-	
 	public List<Integer[]> getPossibleMovesBishop(Space[][] spaces, Piece piece, List<Integer[]> movesList) {
-
-		return movesList;
-	}
-	
-	public List<Integer[]> getPossibleMovesKnight(Space[][] spaces, Piece piece, List<Integer[]> movesList) {
-
-		return movesList;
-	}
-	
-	public List<Integer[]> getPossibleMovesKing(Space[][] spaces, Piece piece, List<Integer[]> movesList) {
-
-		return movesList;
-	}
-	
-	public List<Integer[]> getPossibleMovesQueen(Space[][] spaces, Piece piece, List<Integer[]> movesList) {
+		int pieceX = piece.getX();
+		int pieceY = piece.getY();
+		Integer[] coords = new Integer[2];
+		for (int i = pieceX; i < 8; i++) {
+			for (int j = pieceY; j < 8; j++) {
+				Space temp = spaces[i][j];
+				if (temp.isPiece()) {
+					if (temp.getPiece().getColor().equals(piece.getColor())) {
+						break;
+					} else {
+						coords = new Integer[2];
+						coords[0] = i;
+						coords[1] = pieceY;
+						movesList.add(coords);
+						break;
+					}
+				}
+				coords = new Integer[2];
+				coords[0] = i;
+				coords[1] = j;
+				movesList.add(coords);
+			}
+		}
+		
+		for (int i = pieceX; i < 8; i++) {
+			for (int j = pieceY; j >= 0; j--) {
+				Space temp = spaces[i][j];
+				if (temp.isPiece()) {
+					if (temp.getPiece().getColor().equals(piece.getColor())) {
+						break;
+					} else {
+						coords = new Integer[2];
+						coords[0] = i;
+						coords[1] = pieceY;
+						movesList.add(coords);
+						break;
+					}
+				}
+				coords = new Integer[2];
+				coords[0] = i;
+				coords[1] = pieceY;
+				movesList.add(coords);
+			}
+		}
+		
+		for (int i = pieceX; i >= 0; i--) {
+			for (int j = pieceY; j < 8; j++) {
+				Space temp = spaces[i][j];
+				if (temp.isPiece()) {
+					if (temp.getPiece().getColor().equals(piece.getColor())) {
+						break;
+					} else {
+						coords = new Integer[2];
+						coords[0] = i;
+						coords[1] = pieceY;
+						movesList.add(coords);
+						break;
+					}
+				}
+				coords = new Integer[2];
+				coords[0] = i;
+				coords[1] = pieceY;
+				movesList.add(coords);
+			}
+		}
+		
+		for (int i = pieceX; i >= 0; i--) {
+			for (int j = pieceY; j >= 0; j--) {
+				Space temp = spaces[i][j];
+				if (temp.isPiece()) {
+					if (temp.getPiece().getColor().equals(piece.getColor())) {
+						break;
+					} else {
+						coords = new Integer[2];
+						coords[0] = i;
+						coords[1] = pieceY;
+						movesList.add(coords);
+						break;
+					}
+				}
+				coords = new Integer[2];
+				coords[0] = i;
+				coords[1] = pieceY;
+				movesList.add(coords);
+			}
+		}
 		
 		return movesList;
 	}
 	
+	public List<Integer[]> getPossibleMovesKnight(Space[][] spaces, Piece piece, List<Integer[]> movesList) {
+	    final int[][] offsets = {{1,-2},{2,-1},{2,1},{1,2},{-1,2},
+	            {-2,1},{-2,-1},{-1,-2}};
+		int pieceX = piece.getX();
+		int pieceY = piece.getY();
+		Integer[] coords = new Integer[2];
+		for (int i = 0; i < 8; i++) {
+			int spaceX = pieceX + offsets[i][0];
+			int spaceY = pieceY + offsets[i][1];
+			if (spaceX >= 0 && spaceX < 8 && spaceY >= 0 && spaceY < 8) {
+				if (spaces[spaceX][spaceY].isPiece()) {
+					Piece temp = spaces[spaceX][spaceY].getPiece();
+					if (!temp.getColor().equals(piece.getColor())) {
+						coords = new Integer[2];
+						coords[0] = i;
+						coords[1] = pieceY;
+						movesList.add(coords);
+					}
+				} else {
+					coords = new Integer[2];
+					coords[0] = i;
+					coords[1] = pieceY;
+					movesList.add(coords);
+				}
+			}
+		}
+		
+		return movesList;
+	}
+	
+	public List<Integer[]> getPossibleMovesKing(Space[][] spaces, Piece piece, List<Integer[]> movesList) {
+	    final int[][] offsets = {{1,1},{-1,-1},{1, 0},{-1,0},{-1,1},
+	            {1,-1},{0,-1},{0,1}};
+		int pieceX = piece.getX();
+		int pieceY = piece.getY();
+		Integer[] coords = new Integer[2];
+		for (int i = 0; i < 8; i++) {
+			int spaceX = pieceX + offsets[i][0];
+			int spaceY = pieceY + offsets[i][1];
+			if (spaceX >= 0 && spaceX < 8 && spaceY >= 0 && spaceY < 8) {
+				if (spaces[spaceX][spaceY].isPiece()) {
+					Piece temp = spaces[spaceX][spaceY].getPiece();
+					if (!temp.getColor().equals(piece.getColor())) {
+						coords = new Integer[2];
+						coords[0] = i;
+						coords[1] = pieceY;
+						movesList.add(coords);
+					}
+				} else {
+					coords = new Integer[2];
+					coords[0] = i;
+					coords[1] = pieceY;
+					movesList.add(coords);
+				}
+			}
+		}
+		
+		return movesList;
+	}
+	
+	public List<Integer[]> getPossibleMovesQueen(Space[][] spaces, Piece piece, List<Integer[]> movesList) {
+		movesList = getPossibleMovesRook(spaces, piece, movesList);
+		movesList = getPossibleMovesBishop(spaces, piece, movesList);
+		return movesList;
+	}
+	
 	public List<Integer[]> getPossibleMovesRook(Space[][] spaces, Piece piece, List<Integer[]> movesList) {
-
+		int pieceX = piece.getX();
+		int pieceY = piece.getY();
+		Integer[] coords = new Integer[2];
+		for(int i = pieceX; i < 8; i++) {
+			Space temp = spaces[i][pieceY];
+			if(temp.isPiece()) {
+				if(temp.getPiece().getColor().equals(piece.getColor())) {
+					break;
+				} else {
+					coords = new Integer[2];
+					coords[0] = i;
+					coords[1] = pieceY;
+					movesList.add(coords);
+					break;
+				}
+			}
+			coords = new Integer[2];
+			coords[0] = i;
+			coords[1] = pieceY;
+			movesList.add(coords);
+		}
+		
+		for(int i = pieceX; i >= 0; i--) {
+			Space temp = spaces[i][pieceY];
+			if(temp.isPiece()) {
+				if(temp.getPiece().getColor().equals(piece.getColor())) {
+					break;
+				} else {
+					coords = new Integer[2];
+					coords[0] = i;
+					coords[1] = pieceY;
+					movesList.add(coords);
+					break;
+				}
+			}
+			coords = new Integer[2];
+			coords[0] = i;
+			coords[1] = pieceY;
+			movesList.add(coords);
+		}
+			
+		for(int i = pieceY; i < 8; i++) {
+			Space temp = spaces[i][pieceY];
+			if(temp.isPiece()) {
+				if(temp.getPiece().getColor().equals(piece.getColor())) {
+					break;
+				} else {
+					coords = new Integer[2];
+					coords[0] = pieceX;
+					coords[1] = i;
+					movesList.add(coords);
+					break;
+				}
+			}
+			coords = new Integer[2];
+			coords[0] = pieceX;
+			coords[1] = i;
+			movesList.add(coords);
+		}
+		
+		for(int i = pieceY; i >= 0; i--) {
+			Space temp = spaces[i][pieceY];
+			if(temp.isPiece()) {
+				if(temp.getPiece().getColor().equals(piece.getColor())) {
+					break;
+				} else {
+					coords = new Integer[2];
+					coords[0] = pieceX;
+					coords[1] = i;
+					movesList.add(coords);
+					break;
+				}
+			}
+			coords = new Integer[2];
+			coords[0] = pieceX;
+			coords[1] = i;
+			movesList.add(coords);
+		}
+		
+		
 		return movesList;
 	}
 
