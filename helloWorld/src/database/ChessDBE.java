@@ -11,10 +11,10 @@ import java.sql.Connection;
  *
  */
 public class ChessDBE  {
-	private String mURL;
-	private String mUser;
-	private String mPassword;
-	private Connection mConnection;
+	private String myURL;
+	private String myUser;
+	private String myPassword;
+	private Connection myConnection;
 	
 	/**
 	 * Constructor to set the URL, Username, and Password for the DB.
@@ -23,9 +23,9 @@ public class ChessDBE  {
 	 * @param Password
 	 */
 	public ChessDBE(String URL, String Username, String Password){
-		this.mURL = URL;
-		this.mUser = Username;
-		this.mPassword = Password;
+		this.myURL = URL;
+		this.myUser = Username;
+		this.myPassword = Password;
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class ChessDBE  {
 	 * @throws SQLException
 	 */
 	public void EstablishConnection() throws SQLException{
-		mConnection = (Connection) DriverManager.getConnection(this.mURL, this.mUser, this.mPassword);
+		myConnection = (Connection) DriverManager.getConnection(this.myURL, this.myUser, this.myPassword);
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class ChessDBE  {
 	 * @throws SQLException
 	 */
 	public void CloseConnection() throws SQLException{
-		mConnection.close();
+		myConnection.close();
 	}
 	
 	/**
@@ -49,7 +49,7 @@ public class ChessDBE  {
 	 * @return
 	 */
 	public Connection getConnection(){
-		return this.mConnection;
+		return this.myConnection;
 	}
 
 }

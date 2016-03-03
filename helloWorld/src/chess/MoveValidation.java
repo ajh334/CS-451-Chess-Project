@@ -443,5 +443,5 @@ public class MoveValidation {
 		
 		return movesList;
 	}
-	
+
 }
