@@ -11,7 +11,7 @@ import chess.ChessColor;
 import chess.Space;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
-import test.HelloWorld;
+import test.ChessChamp;
 
 
 public class MenuGUI extends JPanel 
@@ -93,7 +93,7 @@ public class MenuGUI extends JPanel
 {
     public void actionPerformed(ActionEvent e)
    {
-      HelloWorld.f.dispose();
+      ChessChamp.f.dispose();
    
       frameMenu.setSize(805,525);
       frameMenu.setLocation(100, 200);
