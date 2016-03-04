@@ -13,7 +13,7 @@ import chess.ChessColor;
 import chess.Space;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
-import test.HelloWorld;
+import test.ChessChamp;
 import java.sql.*;
 
 
@@ -22,7 +22,6 @@ public class LoginGUI implements GUI
 	static JFrame frameMenu = new JFrame("Chess Champ");
 	
 	private LoginPanel panel;
-	private Connection con = null;
 
  public LoginGUI()
 {

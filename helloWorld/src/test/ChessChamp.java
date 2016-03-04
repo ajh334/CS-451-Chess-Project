@@ -5,7 +5,7 @@ import javax.swing.SwingUtilities;
 
 import gui.*;
 
-public class HelloWorld {
+public class ChessChamp {
 	public static JFrame f = new JFrame("ChessChamp");
 
 	public static void main(String[] args) {

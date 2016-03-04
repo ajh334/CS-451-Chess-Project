@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.sql.*;
+
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -13,7 +15,7 @@ import chess.ChessColor;
 import chess.Space;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
-import test.HelloWorld;
+import test.ChessChamp;
 
 
 public class LoginPanel extends JPanel  
@@ -112,7 +114,28 @@ public class LoginPanel extends JPanel
    {
     	String user = username.getText();
     	System.out.println("Username pulled from textfield: " + user);
-    	HelloWorld.f.dispose();
+    	Connection con = null;
+    	try {
+			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("Class not found");
+			e1.printStackTrace();
+		}
+    	
+    	try {
+			con = DriverManager.getConnection("JDBC:ODBC:ChessChamp", "chesschamp", "chesschamp");			
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery("select * from username");
+			
+		} catch (SQLException e1) {
+			System.out.println("Database error");
+			e1.printStackTrace();
+		}
+    	
+
+		
+    	ChessChamp.f.dispose();
     	
     	frameMenu.setSize(805,525);
     	frameMenu.setLocationByPlatform(true);
