@@ -207,86 +207,106 @@ public class MoveValidation {
 		int pieceX = piece.getX();
 		int pieceY = piece.getY();
 		Integer[] coords = new Integer[2];
-		for (int i = pieceX; i < 8; i++) {
-			for (int j = pieceY; j < 8; j++) {
-				Space temp = spaces[i][j];
+		for (int i = 1; i < 8; i++) {
+			int tempX = pieceX;
+			int tempY = pieceY;
+			tempX += i;
+			tempY += i;
+			if (tempX < 8 && tempX >= 0 && tempY < 8 && tempY >= 0) {
+				Space temp = spaces[tempX][tempY];
 				if (temp.isPiece()) {
-					if (temp.getPiece().getColor().isWhite().equals(piece.getColor().isWhite) && !temp.getPiece().equals(piece)) {
+					if (temp.getPiece().getColor().isWhite().equals(piece.getColor().isWhite)
+							&& !temp.getPiece().equals(piece)) {
 						break;
 					} else if (!temp.getPiece().equals(piece)) {
 						coords = new Integer[2];
-						coords[0] = i;
-						coords[1] = pieceY;
+						coords[0] = tempX;
+						coords[1] = tempY;
 						movesList.add(coords);
 						break;
 					}
 				}
 				coords = new Integer[2];
-				coords[0] = i;
-				coords[1] = j;
+				coords[0] = tempX;
+				coords[1] = tempY;
 				movesList.add(coords);
 			}
 		}
 		
-		for (int i = pieceX; i < 8; i++) {
-			for (int j = pieceY; j >= 0; j--) {
-				Space temp = spaces[i][j];
+		for (int i = 1; i < 8; i++) {
+			int tempX = pieceX;
+			int tempY = pieceY;
+			tempX += i;
+			tempY -= i;
+			if (tempX < 8 && tempX >= 0 && tempY < 8 && tempY >= 0) {
+				Space temp = spaces[tempX][tempY];
 				if (temp.isPiece()) {
-					if (temp.getPiece().getColor().isWhite().equals(piece.getColor().isWhite) && !temp.getPiece().equals(piece)) {
+					if (temp.getPiece().getColor().isWhite().equals(piece.getColor().isWhite)
+							&& !temp.getPiece().equals(piece)) {
 						break;
 					} else if (!temp.getPiece().equals(piece)) {
 						coords = new Integer[2];
-						coords[0] = i;
-						coords[1] = pieceY;
+						coords[0] = tempX;
+						coords[1] = tempY;
 						movesList.add(coords);
 						break;
 					}
 				}
 				coords = new Integer[2];
-				coords[0] = i;
-				coords[1] = pieceY;
+				coords[0] = tempX;
+				coords[1] = tempY;
 				movesList.add(coords);
 			}
 		}
 		
-		for (int i = pieceX; i >= 0; i--) {
-			for (int j = pieceY; j < 8; j++) {
-				Space temp = spaces[i][j];
+		for (int i = 1; i < 8; i++) {
+			int tempX = pieceX;
+			int tempY = pieceY;
+			tempX -= i;
+			tempY += i;
+			if (tempX < 8 && tempX >= 0 && tempY < 8 && tempY >= 0) {
+				Space temp = spaces[tempX][tempY];
 				if (temp.isPiece()) {
-					if (temp.getPiece().getColor().isWhite().equals(piece.getColor().isWhite) && !temp.getPiece().equals(piece)) {
+					if (temp.getPiece().getColor().isWhite().equals(piece.getColor().isWhite)
+							&& !temp.getPiece().equals(piece)) {
 						break;
 					} else if (!temp.getPiece().equals(piece)) {
 						coords = new Integer[2];
-						coords[0] = i;
-						coords[1] = pieceY;
+						coords[0] = tempX;
+						coords[1] = tempY;
 						movesList.add(coords);
 						break;
 					}
 				}
 				coords = new Integer[2];
-				coords[0] = i;
-				coords[1] = pieceY;
+				coords[0] = tempX;
+				coords[1] = tempY;
 				movesList.add(coords);
 			}
 		}
 		
-		for (int i = pieceX; i >= 0; i--) {
-			for (int j = pieceY; j >= 0; j--) {
-				Space temp = spaces[i][j];
+		for (int i = 1; i < 8; i++) {
+			int tempX = pieceX;
+			int tempY = pieceY;
+			tempX -= i;
+			tempY -= i;
+			if (tempX < 8 && tempX >= 0 && tempY < 8 && tempY >= 0) {
+				Space temp = spaces[tempX][tempY];
 				if (temp.isPiece()) {
-					if (temp.getPiece().getColor().isWhite().equals(piece.getColor().isWhite) && !temp.getPiece().equals(piece)) {
+					if (temp.getPiece().getColor().isWhite().equals(piece.getColor().isWhite)
+							&& !temp.getPiece().equals(piece)) {
 						break;
 					} else if (!temp.getPiece().equals(piece)) {
 						coords = new Integer[2];
-						coords[0] = i;
-						coords[1] = pieceY;
+						coords[0] = tempX;
+						coords[1] = tempY;
 						movesList.add(coords);
 						break;
 					}
 				}
 				coords = new Integer[2];
-				coords[0] = i;
-				coords[1] = pieceY;
+				coords[0] = tempX;
+				coords[1] = tempY;
 				movesList.add(coords);
 			}
 		}
@@ -364,7 +384,7 @@ public class MoveValidation {
 		int pieceX = piece.getX();
 		int pieceY = piece.getY();
 		Integer[] coords = new Integer[2];
-		for(int i = pieceX; i < 8; i++) {
+		for(int i = pieceX+1; i < 8; i++) {
 			Space temp = spaces[i][pieceY];
 			if(temp.isPiece()) {
 				if(temp.getPiece().getColor().isWhite().equals(piece.getColor().isWhite) && !temp.getPiece().equals(piece)) {
@@ -383,7 +403,7 @@ public class MoveValidation {
 			movesList.add(coords);
 		}
 		
-		for(int i = pieceX; i >= 0; i--) {
+		for(int i = pieceX-1; i >= 0; i--) {
 			Space temp = spaces[i][pieceY];
 			if(temp.isPiece()) {
 				if(temp.getPiece().getColor().isWhite().equals(piece.getColor().isWhite) && !temp.getPiece().equals(piece)) {
@@ -402,7 +422,7 @@ public class MoveValidation {
 			movesList.add(coords);
 		}
 			
-		for(int i = pieceY; i < 8; i++) {
+		for(int i = pieceY+1; i < 8; i++) {
 			Space temp = spaces[pieceX][i];
 			if(temp.isPiece()) {
 				if(temp.getPiece().getColor().isWhite().equals(piece.getColor().isWhite) && !temp.getPiece().equals(piece)) {
@@ -421,7 +441,7 @@ public class MoveValidation {
 			movesList.add(coords);
 		}
 		
-		for(int i = pieceY; i >= 0; i--) {
+		for(int i = pieceY-1; i >= 0; i--) {
 			Space temp = spaces[pieceX][i];
 			if(temp.isPiece()) {
 				if(temp.getPiece().getColor().isWhite().equals(piece.getColor().isWhite) && !temp.getPiece().equals(piece)) {
