@@ -13,17 +13,12 @@ public class King extends Piece {
 	private String blackKingURL = "https://upload.wikimedia.org/wikipedia/commons/f/f0/Chess_kdt45.svg";
 	private String whiteKingURL = "https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg";
 	private String pieceName = "K";
-	int[][] offsets = {
-	        {1, 0},
-	        {0, 1},
-	        {-1, 0},
-	        {0, -1},
-	        {1, 1},
-	        {-1, 1},
-	        {-1, -1},
-	        {1, -1}
-	};
-	King(ChessColor color) {
+	
+	public King(ChessColor color, Integer x, Integer y) {
+		this.pieceName = "K";
+		this.x = x;
+		this.y = y;
+		this.color = color;
 		Image image;
 		if(color.isWhite()) {
 			BufferedImage bi;
