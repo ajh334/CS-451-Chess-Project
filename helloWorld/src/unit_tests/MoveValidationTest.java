@@ -50,7 +50,9 @@ public class MoveValidationTest {
 		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[3][4].getPiece());
 		
         //check if number of moves is equal to expected value of 14
-		
+		for(int i = 0; i < moveList.size(); i++){
+			System.out.println(moveList.get(i)[0] +" " + moveList.get(i)[1]);
+		}
 		assertEquals(14, moveList.size());
 		
 		//check if number all expected moves exist in returned move list
@@ -93,7 +95,7 @@ public class MoveValidationTest {
 		board[0][0].setPiece(piece);
 		
 		// get mooves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[3][4].getPiece());
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[0][0].getPiece());
 		
         //check if number of moves is equal to expected value of 14
 		
@@ -210,11 +212,11 @@ public class MoveValidationTest {
 		
 		color = new ChessColor(true);
 		King whiteKing = new King(color,  1,  1);
-		board[1][4].setPiece(whiteKing);
+		board[1][1].setPiece(whiteKing);
 		
 		color = new ChessColor(false);
 		Rook blackRook = new Rook(color,  7,  1);
-		board[1][4].setPiece(blackRook);
+		board[7][1].setPiece(blackRook);
 		
 		color = new ChessColor(false);
 		Pawn blackPawn3 = new Pawn(color,  7,  4);
@@ -234,5 +236,204 @@ public class MoveValidationTest {
 		assertTrue(moveList.contains(new Integer[]{3,1}));
 	
 	}
+	
+	    //--------------------
+		//--- Bishop TESTS ---
+		//--------------------
+		
+		@Test
+		public void testBishopEmptyBoard() {
+			
+			MoveValidation mv = new MoveValidation();
+			
+			// Set up board for test
+			Space[][] board = new Space[8][8];
+			
+			for (int x = 0; x < board.length; x++) {
+	            for (int y = 0; y < board[x].length; y++) {
+	                Space b = new Space();
+	                board[x][y] = b;
+	            }
+	        }
+
+			
+			ChessColor color = new ChessColor(true);
+			Bishop piece = new Bishop(color,  4,  4);
+			board[4][4].setPiece(piece);
+			
+			// get mooves
+			ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+			
+	        //check if number of moves is equal to expected value of 13
+			
+			assertEquals(13, moveList.size());
+			
+			//check if number all expected moves exist in returned move list
+			assertTrue(moveList.contains(new Integer[]{0,0}));
+			assertTrue(moveList.contains(new Integer[]{1,1}));
+			assertTrue(moveList.contains(new Integer[]{2,2}));
+			assertTrue(moveList.contains(new Integer[]{3,3}));
+			assertTrue(moveList.contains(new Integer[]{5,5}));
+			assertTrue(moveList.contains(new Integer[]{6,6}));
+			assertTrue(moveList.contains(new Integer[]{7,7}));
+			
+			assertTrue(moveList.contains(new Integer[]{1,7}));
+			assertTrue(moveList.contains(new Integer[]{2,6}));
+			assertTrue(moveList.contains(new Integer[]{3,5}));
+			assertTrue(moveList.contains(new Integer[]{5,3}));
+			assertTrue(moveList.contains(new Integer[]{6,2}));
+			assertTrue(moveList.contains(new Integer[]{7,1}));
+
+			
+		}
+		
+		
+		@Test
+		public void testBishopBoardEdge() {
+			
+			MoveValidation mv = new MoveValidation();
+			
+			// Set up board for test
+			Space[][] board = new Space[8][8];
+			
+			for (int x = 0; x < board.length; x++) {
+	            for (int y = 0; y < board[x].length; y++) {
+	                Space b = new Space();
+	                board[x][y] = b;
+	            }
+	        }
+
+			
+			ChessColor color = new ChessColor(true);
+			Bishop piece = new Bishop(color,  0,  0);
+			board[0][0].setPiece(piece);
+			
+			// get mooves
+			ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[0][0].getPiece());
+			
+	        //check if number of moves is equal to expected value of 7
+			
+			assertEquals(7, moveList.size());
+			
+			//check if number all expected moves exist in returned move list
+			assertTrue(moveList.contains(new Integer[]{1,1}));
+			assertTrue(moveList.contains(new Integer[]{2,2}));
+			assertTrue(moveList.contains(new Integer[]{3,3}));
+			assertTrue(moveList.contains(new Integer[]{4,4}));
+			assertTrue(moveList.contains(new Integer[]{5,5}));
+			assertTrue(moveList.contains(new Integer[]{6,6}));
+			assertTrue(moveList.contains(new Integer[]{7,7}));
+			
+		}
+		
+		
+		@Test
+		public void testBishopPopulatedBoard() {
+			
+			MoveValidation mv = new MoveValidation();
+			
+			// Set up board for test
+			Space[][] board = new Space[8][8];
+			
+			for (int x = 0; x < board.length; x++) {
+	            for (int y = 0; y < board[x].length; y++) {
+	                Space b = new Space();
+	                board[x][y] = b;
+	            }
+	        }
+
+			
+			ChessColor color = new ChessColor(true);
+			Bishop piece = new Bishop(color,  4, 4);
+			board[4][4].setPiece(piece);
+			
+			color = new ChessColor(false);
+			Pawn piece2 = new Pawn(color,  2, 2);
+			board[2][2].setPiece(piece2);
+			
+			color = new ChessColor(false);
+			Pawn piece3 = new Pawn(color,  6, 6);
+			board[6][6].setPiece(piece3);
+			
+			color = new ChessColor(true);
+			Pawn piece4 = new Pawn(color,  1,7);
+			board[1][7].setPiece(piece4);
+			
+			color = new ChessColor(false);
+			Pawn piece5 = new Pawn(color,  6,2);
+			board[6][2].setPiece(piece5);
+			
+			// get moves
+			ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+						
+			//check if number of moves is equal to expected value of 13
+						
+			assertEquals(8, moveList.size());
+						
+			//check if number all expected moves exist in returned move list
+			assertTrue(moveList.contains(new Integer[]{2,2}));
+			assertTrue(moveList.contains(new Integer[]{3,3}));
+			assertTrue(moveList.contains(new Integer[]{5,5}));
+			assertTrue(moveList.contains(new Integer[]{6,6}));					
+			assertTrue(moveList.contains(new Integer[]{2,6}));
+			assertTrue(moveList.contains(new Integer[]{3,5}));
+			assertTrue(moveList.contains(new Integer[]{5,3}));
+			assertTrue(moveList.contains(new Integer[]{6,2}));
+
+		}
+		
+		
+		@Test
+		public void testBishopCheck() {
+			
+			MoveValidation mv = new MoveValidation();
+			
+			// Set up board for test
+			Space[][] board = new Space[8][8];
+			
+			for (int x = 0; x < board.length; x++) {
+	            for (int y = 0; y < board[x].length; y++) {
+	                Space b = new Space();
+	                board[x][y] = b;
+	            }
+	        }
+
+			
+			ChessColor color = new ChessColor(true);
+			Bishop piece = new Bishop(color,  4, 4);
+			board[4][4].setPiece(piece);
+			
+			color = new ChessColor(false);
+			Rook piece2 = new Rook(color,  2, 2);
+			board[2][2].setPiece(piece2);
+			
+			color = new ChessColor(true);
+		    King whiteKing = new King(color, 2, 4);
+			board[2][4].setPiece(whiteKing);
+			
+			color = new ChessColor(false);
+			Pawn piece3 = new Pawn(color,  6, 6);
+			board[6][6].setPiece(piece3);
+			
+			color = new ChessColor(true);
+			Pawn piece4 = new Pawn(color,  1,7);
+			board[1][7].setPiece(piece4);
+			
+			color = new ChessColor(false);
+			Pawn piece5 = new Pawn(color,  6,2);
+			board[6][2].setPiece(piece5);
+			
+			// get moves
+			ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+						
+			//check if number of moves is equal to expected value of 13
+						
+			assertEquals(8, moveList.size());
+						
+			//check if number all expected moves exist in returned move list
+			assertTrue(moveList.contains(new Integer[]{2,2}));
+
+		
+		}
 
 }
