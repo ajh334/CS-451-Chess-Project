@@ -17,6 +17,7 @@ import chess.Space;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
 import chess.pieces.Queen;
+import chess.pieces.Rook;
 
 public class BoardGUI {
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
@@ -168,7 +169,7 @@ public class BoardGUI {
     			if(i == 1) {
         			Space temp = spaces[j][i];
         			ChessColor color = new ChessColor(black);
-        			Piece piece = new Pawn(color, j, i);
+        			Piece piece = new Rook(color, j, i);
         			temp.setPiece(piece);
     			} else if (i == 0) {
     				Space temp = spaces[j][i];
