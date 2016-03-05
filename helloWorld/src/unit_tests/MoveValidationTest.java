@@ -21,6 +21,26 @@ import gui.BoardGUI;
 
 public class MoveValidationTest {
 
+	//------------------------------
+	//-----                    -----
+	//-----    TEST METHODS    -----
+	//-----                    -----
+	//------------------------------
+	
+	public Space[][] setupTestBoard()
+	{
+		Space[][] board = new Space[8][8];
+		
+		for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board[x].length; y++) {
+                Space b = new Space();
+                board[x][y] = b;
+            }
+        }
+		 return board;
+	}
+	
+	
 	public boolean moveExists(ArrayList<Integer[]> moveList, Integer x, Integer y){
 		for(int i = 0; i < moveList.size(); i++){
 			if(moveList.get(i)[0] == x &&  moveList.get(i)[1] == y){
@@ -30,25 +50,17 @@ public class MoveValidationTest {
 		
 		return false;
 	}
-	//------------------
-	//--- ROOK TESTS ---
-	//------------------
 	
+	//------------------------------
+	//-----                    -----
+	//-----     ROOK TESTS     -----
+    //-----                    -----
+    //------------------------------
 	@Test
-	public void testRookEmptyBoard() {
-		
+	public void testRookEmptyBoard() 
+	{	
 		MoveValidation mv = new MoveValidation();
-		
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-		
-		for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board[x].length; y++) {
-                Space b = new Space();
-                board[x][y] = b;
-            }
-        }
-
+		Space[][] board = setupTestBoard();
 		
 		ChessColor color = new ChessColor(true);
 		Rook piece = new Rook(color,  3,  4);
@@ -85,15 +97,7 @@ public class MoveValidationTest {
 		MoveValidation mv = new MoveValidation();
 		
 		// Set up board for test
-		Space[][] board = new Space[8][8];
-		
-		for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board[x].length; y++) {
-                Space b = new Space();
-                board[x][y] = b;
-            }
-        }
-
+		Space[][] board = setupTestBoard();
 		
 		ChessColor color = new ChessColor(true);
 		Rook piece = new Rook(color,  0,  0);
@@ -126,20 +130,10 @@ public class MoveValidationTest {
 	
 	
 	@Test
-	public void testRookCaptures() {
-		
+	public void testRookCaptures() 
+	{	
 		MoveValidation mv = new MoveValidation();
-		
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-		
-		for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board[x].length; y++) {
-                Space b = new Space();
-                board[x][y] = b;
-            }
-        }
-
+		Space[][] board = setupTestBoard();
 		
 		ChessColor color = new ChessColor(true);
 		Rook piece = new Rook(color,  3,  4);
@@ -187,20 +181,10 @@ public class MoveValidationTest {
 	}
 	
 	@Test
-	public void testRookOwnPieceConflicts() {
-		
+	public void testRookOwnPieceConflicts() 
+	{
 		MoveValidation mv = new MoveValidation();
-		
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-		
-		for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board[x].length; y++) {
-                Space b = new Space();
-                board[x][y] = b;
-            }
-        }
-
+		Space[][] board = setupTestBoard();
 		
 		ChessColor color = new ChessColor(true);
 		Rook piece = new Rook(color,  3,  4);
@@ -241,19 +225,10 @@ public class MoveValidationTest {
 	}
 	
 	@Test
-	public void testRookCheck() {
-		
+	public void testRookCheck() 
+	{
 		MoveValidation mv = new MoveValidation();
-		
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-		
-		for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board[x].length; y++) {
-                Space b = new Space();
-                board[x][y] = b;
-            }
-        }
+		Space[][] board = setupTestBoard();
 
 		
 		ChessColor color = new ChessColor(true);
@@ -284,8 +259,6 @@ public class MoveValidationTest {
 		Pawn blackPawn3 = new Pawn(color,  7,  4);
 		board[7][4].setPiece( blackPawn3);
 		
-		
-		
 		// get moves
 		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[3][4].getPiece());
 		
@@ -299,24 +272,17 @@ public class MoveValidationTest {
 	
 	}
 	
-	//--------------------
-    //--- Bishop TESTS ---
-	//--------------------
-		
+	
+	//------------------------------
+	//-----                    -----
+    //-----    BISHOP TESTS    -----
+	//-----                    -----
+	//------------------------------	
 	@Test
-	public void testBishopEmptyBoard() {
-			
+	public void testBishopEmptyBoard() 
+	{			
 		MoveValidation mv = new MoveValidation();
-			
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-				Space b = new Space();
-	            board[x][y] = b;
-	        }
-	    }
+		Space[][] board = setupTestBoard();
 
 		ChessColor color = new ChessColor(true);
 		Bishop piece = new Bishop(color,  4,  4);
@@ -344,24 +310,13 @@ public class MoveValidationTest {
 		assertTrue(moveExists(moveList, 5,3));
 		assertTrue(moveExists(moveList, 6,2));
 		assertTrue(moveExists(moveList, 7,1));
-	
 	}
-		
-		
+			
 	@Test
-	public void testBishopBoardEdge() {
-			
+	public void testBishopBoardEdge() 
+	{		
 		MoveValidation mv = new MoveValidation();
-			
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-				Space b = new Space();
-				board[x][y] = b;
-			}
-		}
+		Space[][] board = setupTestBoard();
 		
 		ChessColor color = new ChessColor(true);
 		Bishop piece = new Bishop(color,  0,  0);
@@ -384,22 +339,12 @@ public class MoveValidationTest {
 		assertTrue(moveExists(moveList, 7,7));
 			
 	}
-		
-		
+			
 	@Test
-	public void testBishopCaptures() {
-			
+	public void testBishopCaptures() 
+	{	
 		MoveValidation mv = new MoveValidation();
-			
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-				Space b = new Space();
-				board[x][y] = b;
-			}
-		}
+		Space[][] board = setupTestBoard();
 		
 		ChessColor color = new ChessColor(true);
 		Bishop piece = new Bishop(color,  4, 4);
@@ -445,16 +390,7 @@ public class MoveValidationTest {
 	public void testBishopOwnPieceConflicts() {
 			
 		MoveValidation mv = new MoveValidation();
-			
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-				Space b = new Space();
-				board[x][y] = b;
-			}
-		}
+		Space[][] board = setupTestBoard();
 		
 		ChessColor color = new ChessColor(true);
 		Bishop piece = new Bishop(color,  4, 4);
@@ -492,21 +428,11 @@ public class MoveValidationTest {
 	}
 		
 	@Test
-	public void testBishopCheck() {
-			
+	public void testBishopCheck() 
+	{	
 		MoveValidation mv = new MoveValidation();
-			
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-				Space b = new Space();
-	            board[x][y] = b;
-	    	}
-	   }
-
-			
+		Space[][] board = setupTestBoard();
+		
 		ChessColor color = new ChessColor(true);
 		Bishop piece = new Bishop(color,  4, 4);
 		board[4][4].setPiece(piece);
@@ -534,33 +460,26 @@ public class MoveValidationTest {
 		// get moves
 		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
 						
-		//check if number of moves is equal to expected value of 13
+		//check if number of moves is equal to expected value of 1
 						
-		assertEquals(8, moveList.size());
+		assertEquals(1, moveList.size());
 						
 		//check if number all expected moves exist in returned move list
 		assertTrue(moveExists(moveList, 2,2));
 
 	}
 
-	//-------------------
-    //--- QUEEN TESTS ---
-	//-------------------
-		
+	
+	//------------------------------
+	//-----                    -----
+	//-----    QUEEN TESTS     -----
+	//-----                    -----
+	//------------------------------	
 	@Test
-	public void testQueenEmptyBoard() {
-			
+	public void testQueenEmptyBoard() 
+	{		
 		MoveValidation mv = new MoveValidation();
-			
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-				Space b = new Space();
-	            board[x][y] = b;
-	        }
-	    }
+		Space[][] board = setupTestBoard();
 
 		ChessColor color = new ChessColor(true);
 		Queen piece = new Queen(color,  4,  4);
@@ -605,25 +524,16 @@ public class MoveValidationTest {
 		
 		
 	@Test
-	public void testQueenBoardEdge() {
-			
+	public void testQueenBoardEdge() 
+	{	
 		MoveValidation mv = new MoveValidation();
-			
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-				Space b = new Space();
-				board[x][y] = b;
-			}
-		}
+		Space[][] board = setupTestBoard();
 		
 		ChessColor color = new ChessColor(true);
 		Queen piece = new Queen(color,  0,  0);
 		board[0][0].setPiece(piece);
 			
-		// get mooves
+		// get moves
 		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[0][0].getPiece());
 			
 		//check if number of moves is equal to expected value of 21
@@ -657,19 +567,10 @@ public class MoveValidationTest {
 		
 		
 	@Test
-	public void testQueenCaptures() {
-			
+	public void testQueenCaptures() 
+	{
 		MoveValidation mv = new MoveValidation();
-			
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-				Space b = new Space();
-				board[x][y] = b;
-			}
-		}
+		Space[][] board = setupTestBoard();
 		
 		ChessColor color = new ChessColor(true);
 		Queen piece = new Queen(color,  4, 4);
@@ -743,19 +644,10 @@ public class MoveValidationTest {
 	}
 	
 	@Test
-	public void testQueenOwnPieceConflicts() {
-			
+	public void testQueenOwnPieceConflicts() 
+	{	
 		MoveValidation mv = new MoveValidation();
-			
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-				Space b = new Space();
-				board[x][y] = b;
-			}
-		}
+		Space[][] board = setupTestBoard();
 		
 		ChessColor color = new ChessColor(true);
 		Queen piece = new Queen(color,  4, 4);
@@ -821,20 +713,10 @@ public class MoveValidationTest {
 	}
 		
 	@Test
-	public void testQueenCheck() {
-			
+	public void testQueenCheck() 
+	{		
 		MoveValidation mv = new MoveValidation();
-			
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-				Space b = new Space();
-	            board[x][y] = b;
-	    	}
-	   }
-
+		Space[][] board = setupTestBoard();
 			
 		ChessColor color = new ChessColor(true);
 		Queen piece = new Queen(color, 4, 4);
@@ -872,25 +754,18 @@ public class MoveValidationTest {
 
 	}
 	
-	//------------------
-    //--- ROOK TESTS ---
-	//------------------
-		
+	
+	//------------------------------
+	//-----                    -----
+	//-----    KNIGHT TESTS    -----
+    //-----                    -----
+	//------------------------------
+	
 	@Test
-	public void testKnightEmptyBoard() {
-			
+	public void testKnightEmptyBoard() 
+	{		
 		MoveValidation mv = new MoveValidation();
-			
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-	        	Space b = new Space();
-	            board[x][y] = b;
-			}
-	  	}
-
+		Space[][] board = setupTestBoard();
 			
 		ChessColor color = new ChessColor(true);
 		Knight piece = new Knight(color, 4,  4);
@@ -898,10 +773,7 @@ public class MoveValidationTest {
 
 		// get mooves
 		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
-		for(int i = 0; i < moveList.size(); i++){
-			System.out.println(moveList.get(i)[0] + " " + moveList.get(i)[1]);
-			
-		}		
+	
 	    //check if number of moves is equal to expected value of 8
 	    assertEquals(8, moveList.size());
 			
@@ -918,20 +790,11 @@ public class MoveValidationTest {
 		
 		
 	@Test
-	public void testknightBoardEdge() {
-			
+	public void testknightBoardEdge() 
+	{		
 		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
 		
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-				Space b = new Space();
-	            board[x][y] = b;
-			}
-	    }
-
 		ChessColor color = new ChessColor(true);
 		Knight piece = new Knight(color, 0,  0);
 		board[0][0].setPiece(piece);
@@ -949,19 +812,10 @@ public class MoveValidationTest {
 	}
 		
 	@Test
-	public void testKnightCaptures() {	
+	public void testKnightCaptures() 
+	{	
 		MoveValidation mv = new MoveValidation();
-	
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-	        	Space b = new Space();
-	        	board[x][y] = b;
-	   		}
-		}
-
+		Space[][] board = setupTestBoard();
 			
 		ChessColor color = new ChessColor(true);
 		Knight piece = new Knight(color, 4,  4);
@@ -984,7 +838,7 @@ public class MoveValidationTest {
 		board[4][5].setPiece(piece5);
 			
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[3][4].getPiece());
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
 			
 	    //check if number of moves is equal to expected value of 8
 			
@@ -1003,19 +857,10 @@ public class MoveValidationTest {
 	}
 		
 	@Test
-	public void testKnightOwnPieceConflicts() {
+	public void testKnightOwnPieceConflicts() 
+	{
 		MoveValidation mv = new MoveValidation();
-		
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-	        	Space b = new Space();
-	        	board[x][y] = b;
-	   		}
-		}
-
+		Space[][] board = setupTestBoard();
 			
 		ChessColor color = new ChessColor(true);
 		Knight piece = new Knight(color, 4,  4);
@@ -1060,18 +905,8 @@ public class MoveValidationTest {
 	public void testKnightCheck() 
 	{
 		MoveValidation mv = new MoveValidation();
-		
-		// Set up board for test
-		Space[][] board = new Space[8][8];
-			
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
-	        	Space b = new Space();
-	        	board[x][y] = b;
-	   		}
-		}
-
-			
+		Space[][] board = setupTestBoard();
+	
 		ChessColor color = new ChessColor(true);
 		Knight piece = new Knight(color, 4,  4);
 		board[4][4].setPiece(piece);
@@ -1105,5 +940,252 @@ public class MoveValidationTest {
 			
 		//check if number all expected moves exist in returned move list
 		assertTrue(moveExists(moveList, 2,5));
+	}
+	
+
+	//------------------------------
+	//-----                    -----
+	//-----     KING TESTS     -----
+    //-----                    -----
+	//------------------------------
+	@Test
+	public void testKingEmptyBoard() 
+	{
+		
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+		
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(true);
+		King piece = new King(color, 4,  4);
+		board[4][4].setPiece(piece);
+
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+			
+	    //check if number of moves is equal to expected value of 8
+	    assertEquals(8, moveList.size());
+			
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 4,3));
+		assertTrue(moveExists(moveList, 4,5));
+		assertTrue(moveExists(moveList, 3,4));
+		assertTrue(moveExists(moveList, 5,4));
+		assertTrue(moveExists(moveList, 3,3));
+		assertTrue(moveExists(moveList, 3,5));
+		assertTrue(moveExists(moveList, 5,3));
+		assertTrue(moveExists(moveList, 5,5));
+	}
+		
+		
+	@Test
+	public void testKingBoardEdge() 
+	{		
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+				
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(true);
+		King piece = new King(color, 0,  0);
+		board[0][0].setPiece(piece);
+
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[0][0].getPiece());
+					
+		//check if number of moves is equal to expected value of 3
+		assertEquals(3, moveList.size());
+					
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 1,0));
+		assertTrue(moveExists(moveList, 0,1));
+		assertTrue(moveExists(moveList, 1,1));
+	}
+		
+	@Test
+	public void testKingCaptures() 
+	{	
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+			
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(true);
+		King piece = new King(color, 4,  4);
+		board[4][4].setPiece(piece);
+
+		color = new ChessColor(false);
+		Pawn piece2 = new Pawn(color,  3,  4);
+	    board[3][4].setPiece(piece2);
+			
+		color = new ChessColor(false);
+		Pawn piece3 = new Pawn(color,  5,  4);
+		board[5][4].setPiece(piece3);
+			
+		color = new ChessColor(false);
+		Pawn piece4 = new Pawn(color,  3,  5);
+		board[3][5].setPiece(piece4);
+			
+		color = new ChessColor(false);
+		Pawn piece5 = new Pawn(color,  5,  5);
+		board[5][5].setPiece(piece5);
+		
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+					
+	    //check if number of moves is equal to expected value of 7
+	    assertEquals(7, moveList.size());
+					
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 4,3));
+		assertTrue(moveExists(moveList, 3,4));
+		assertTrue(moveExists(moveList, 5,4));
+		assertTrue(moveExists(moveList, 3,3));
+		assertTrue(moveExists(moveList, 3,5));
+		assertTrue(moveExists(moveList, 5,3));
+		assertTrue(moveExists(moveList, 5,5));	
+	}
+		
+	@Test
+	public void testKingOwnPieceConflicts() {
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+					
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(true);
+		King piece = new King(color, 4,  4);
+		board[4][4].setPiece(piece);
+
+		color = new ChessColor(true);
+		Pawn piece2 = new Pawn(color,  3,  4);
+	    board[3][4].setPiece(piece2);
+					
+		color = new ChessColor(true);
+		Pawn piece3 = new Pawn(color,  4, 5);
+		board[4][5].setPiece(piece3);
+					
+		color = new ChessColor(true);
+		Pawn piece4 = new Pawn(color,  3,  5);
+		board[3][5].setPiece(piece4);
+					
+		color = new ChessColor(true);
+		Pawn piece5 = new Pawn(color,  5,  5);
+		board[5][5].setPiece(piece5);
+				
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+							
+		//check if number of moves is equal to expected value of 7
+		assertEquals(4, moveList.size());
+							
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 4,3));
+		assertTrue(moveExists(moveList, 5,4));
+		assertTrue(moveExists(moveList, 3,3));
+		assertTrue(moveExists(moveList, 5,3));
+	}
+		
+	@Test
+	public void testKingCheck() 
+	{
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+							
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(true);
+		King piece = new King(color, 4,  4);
+		board[4][4].setPiece(piece);
+
+		color = new ChessColor(false);
+		Pawn piece2 = new Pawn(color, 3, 3);
+		board[3][3].setPiece(piece2);
+				
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+									
+		//check if number of moves is equal to expected value of 1
+		assertEquals(1, moveList.size());
+									
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 3, 3));
+
+	}
+	
+	@Test
+	public void testKingCastling() 
+	{
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+							
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(true);
+		King whiteKing = new King(color, 4,  7);
+		board[4][7].setPiece(whiteKing);
+
+		color = new ChessColor(true);
+		Rook whiteRook = new Rook(color, 0, 7);
+		board[0][7].setPiece(whiteRook);
+		
+		color = new ChessColor(true);
+		Rook whiteRook2 = new Rook(color, 7, 7);
+		board[7][7].setPiece(whiteRook2);
+		
+		color = new ChessColor(false);
+		King blackKing = new King(color, 4,  0);
+		board[4][0].setPiece(blackKing);
+
+		color = new ChessColor(false);
+		Rook blackRook = new Rook(color, 0, 0);
+		board[0][0].setPiece(blackRook);
+		
+		color = new ChessColor(false);
+		Rook blackRook2 = new Rook(color, 7, 0);
+		board[7][0].setPiece(blackRook2);
+		
+		//---------------------------------------
+		//--- Check that castling is returned ---
+		//--- with valid moves for white king ---
+		//---------------------------------------
+		
+		// get moves for white king
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][7].getPiece());
+									
+		//check if number of moves is equal to expected value of 7
+		assertEquals(7, moveList.size());
+									
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 3, 6));
+		assertTrue(moveExists(moveList, 3, 7));
+		assertTrue(moveExists(moveList, 4, 6));
+		assertTrue(moveExists(moveList, 5, 6));
+		assertTrue(moveExists(moveList, 5, 7));
+		
+		assertTrue(moveExists(moveList, 2, 7));
+		assertTrue(moveExists(moveList, 6, 7));
+		
+		//---------------------------------------
+		//--- Check that castling is returned ---
+		//--- with valid moves for black king ---
+		//---------------------------------------
+				
+		// get moves for black king
+		moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][7].getPiece());
+											
+		//check if number of moves is equal to expected value of 7
+		assertEquals(7, moveList.size());
+											
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 3, 0));
+		assertTrue(moveExists(moveList, 3, 1));
+		assertTrue(moveExists(moveList, 4, 1));
+		assertTrue(moveExists(moveList, 5, 0));
+		assertTrue(moveExists(moveList, 5, 1));
+		
+		assertTrue(moveExists(moveList, 2, 0));
+		assertTrue(moveExists(moveList, 6, 0));
 	}
 }
