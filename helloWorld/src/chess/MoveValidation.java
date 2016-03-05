@@ -320,22 +320,22 @@ public class MoveValidation {
 		int pieceX = piece.getX();
 		int pieceY = piece.getY();
 		Integer[] coords = new Integer[2];
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < offsets.length; i++) {
 			int spaceX = pieceX + offsets[i][0];
 			int spaceY = pieceY + offsets[i][1];
 			if (spaceX >= 0 && spaceX < 8 && spaceY >= 0 && spaceY < 8) {
 				if (spaces[spaceX][spaceY].isPiece()) {
 					Piece temp = spaces[spaceX][spaceY].getPiece();
-					if (!temp.getColor().equals(piece.getColor())) {
+					if (!temp.getColor().isWhite().equals(piece.getColor().isWhite)) {
 						coords = new Integer[2];
-						coords[0] = i;
-						coords[1] = pieceY;
+						coords[0] = spaceX;
+						coords[1] = spaceY;
 						movesList.add(coords);
 					}
 				} else {
 					coords = new Integer[2];
-					coords[0] = i;
-					coords[1] = pieceY;
+					coords[0] = spaceX;
+					coords[1] = spaceY;
 					movesList.add(coords);
 				}
 			}
@@ -356,16 +356,16 @@ public class MoveValidation {
 			if (spaceX >= 0 && spaceX < 8 && spaceY >= 0 && spaceY < 8) {
 				if (spaces[spaceX][spaceY].isPiece()) {
 					Piece temp = spaces[spaceX][spaceY].getPiece();
-					if (!temp.getColor().equals(piece.getColor())) {
+					if (!temp.getColor().isWhite().equals(piece.getColor().isWhite)) {
 						coords = new Integer[2];
-						coords[0] = i;
-						coords[1] = pieceY;
+						coords[0] = spaceX;
+						coords[1] = spaceY;
 						movesList.add(coords);
 					}
 				} else {
 					coords = new Integer[2];
-					coords[0] = i;
-					coords[1] = pieceY;
+					coords[0] = spaceX;
+					coords[1] = spaceY;
 					movesList.add(coords);
 				}
 			}
