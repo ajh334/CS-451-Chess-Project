@@ -1188,4 +1188,514 @@ public class MoveValidationTest {
 		assertTrue(moveExists(moveList, 2, 0));
 		assertTrue(moveExists(moveList, 6, 0));
 	}
+	
+	
+	//------------------------------
+	//-----                    -----
+	//-----     Pawn TESTS     -----
+    //-----                    -----
+	//------------------------------
+	@Test
+	public void testWhitePawnEmptyBoard() 
+	{
+		
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+		
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(true);
+		Pawn piece = new Pawn(color, 4,  4);
+		piece.setHasMoved(true);
+		board[4][4].setPiece(piece);
+
+		color = new ChessColor(true);
+		Pawn piece2 = new Pawn(color, 2,  6);
+		board[2][6].setPiece(piece2);
+		
+		//---------------------------------------
+		//--- Test Pawn not at initial square ---
+		//---------------------------------------
+		
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+			
+	    //check if number of moves is equal to expected value of 1
+	    assertEquals(1, moveList.size());
+			
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 4,3));
+		
+		//---------------------------------------
+		//----  Test Pawn at initial square  ----
+		//---------------------------------------
+				
+		// get moves
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[2][6].getPiece());
+					
+		//check if number of moves is equal to expected value of 2
+		assertEquals(2, moveList.size());
+					
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 2,5));
+		assertTrue(moveExists(moveList, 2,4));
+	}
+		
+		
+	@Test
+	public void testWhitePawnBoardEdge() 
+	{
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+		
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(true);
+		Pawn piece = new Pawn(color, 0,  0);
+		board[0][0].setPiece(piece);
+
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[0][0].getPiece());
+			
+	    //check if number of moves is equal to expected value of 1
+	    assertEquals(0, moveList.size());	
+	}
+		
+	@Test
+	public void testWhitePawnCaptures() 
+	{
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+			
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(true);
+		Pawn piece = new Pawn(color, 4,  4);
+		piece.setHasMoved(true);
+		board[4][4].setPiece(piece);
+		
+		color = new ChessColor(true);
+		Pawn piece2 = new Pawn(color, 2,  6);
+		board[2][6].setPiece(piece2);
+			
+		color = new ChessColor(true);
+		Pawn piece3 = new Pawn(color, 6,  6);
+		board[6][6].setPiece(piece3);
+
+		color = new ChessColor(false);
+		Pawn blackPiece = new Pawn(color,  6,  5);
+		board[6][5].setPiece(blackPiece);
+				
+		color = new ChessColor(false);
+		Pawn blackPiece2 = new Pawn(color,  2,  4);
+		board[2][4].setPiece(blackPiece2);
+				
+		color = new ChessColor(false);
+		Pawn blackPiece3 = new Pawn(color,  3,  5);
+		board[3][5].setPiece(blackPiece3);
+				
+		color = new ChessColor(false);
+		Pawn blackPiece4 = new Pawn(color,  4,  2);
+		board[4][2].setPiece(blackPiece4);	
+			
+		color = new ChessColor(false);
+		Pawn blackPiece5 = new Pawn(color,  4,  2);
+		board[3][3].setPiece(blackPiece5);	
+			
+		//---------------------------------------
+		//--- Test Pawn not at initial square ---
+		//---------------------------------------
+			
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+				
+		//check if number of moves is equal to expected value of 2
+		assertEquals(2, moveList.size());
+				
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 4,3));
+		assertTrue(moveExists(moveList, 3,3));
+			
+		//---------------------------------------
+		//----  Test Pawn at initial square  ----
+		//---------------------------------------
+					
+		// get moves
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[2][6].getPiece());
+						
+		//check if number of moves is equal to expected value of 2
+		assertEquals(2, moveList.size());
+						
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 2,5));
+		assertTrue(moveExists(moveList, 3,5));
+		
+		// get moves
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[6][6].getPiece());
+								
+		//check if number of moves is equal to expected value of 2
+		assertEquals(0, moveList.size());
+	}
+		
+	@Test
+	public void testWhitePawnPieceConflicts() 
+	{
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+					
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(true);
+		Pawn piece = new Pawn(color, 4,  4);
+		piece.setHasMoved(true);
+		board[4][4].setPiece(piece);
+				
+		color = new ChessColor(true);
+		Pawn piece2 = new Pawn(color, 2,  6);
+		board[2][6].setPiece(piece2);
+					
+		color = new ChessColor(true);
+		Pawn piece3 = new Pawn(color, 6,  6);
+		board[6][6].setPiece(piece3);
+
+		color = new ChessColor(true);
+		Pawn piece4 = new Pawn(color,  6,  5);
+		board[6][5].setPiece(piece4);
+						
+		color = new ChessColor(true);
+		Pawn piece5 = new Pawn(color,  2,  4);
+		board[2][4].setPiece(piece5);
+						
+		color = new ChessColor(true);
+		Pawn piece6 = new Pawn(color,  3,  5);
+		board[3][5].setPiece(piece6);
+						
+		color = new ChessColor(true);
+		Pawn piece7 = new Pawn(color,  4,  2);
+		board[4][2].setPiece(piece7);	
+					
+		color = new ChessColor(true);
+		Pawn piece8 = new Pawn(color,  4,  2);
+		board[3][3].setPiece(piece8);	
+					
+		//---------------------------------------
+		//--- Test Pawn not at initial square ---
+		//---------------------------------------
+					
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+						
+		//check if number of moves is equal to expected value of 1
+		assertEquals(1, moveList.size());
+						
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 4,3));
+					
+		//---------------------------------------
+		//----  Test Pawn at initial square  ----
+		//---------------------------------------
+							
+		// get moves
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[2][6].getPiece());
+								
+		//check if number of moves is equal to expected value of 1
+		assertEquals(1, moveList.size());
+								
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 2,5));
+
+		// get moves
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[6][6].getPiece());
+										
+		//check if number of moves is equal to expected value of 2
+		assertEquals(0, moveList.size());
+	}	
+	
+	@Test
+	public void testWhitePawnCheck() 
+	{
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+					
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(true);
+		Pawn piece = new Pawn(color, 4,  4);
+		piece.setHasMoved(true);
+		board[4][4].setPiece(piece);
+				
+		color = new ChessColor(true);
+		King king = new King(color, 5,  4);
+		board[5][4].setPiece(king);
+					
+		color = new ChessColor(false);
+		Rook rook = new Rook(color, 5,  3);
+		board[5][3].setPiece(rook);
+
+		color = new ChessColor(false);
+		Rook rook2 = new Rook(color, 3,  3);
+		board[3][3].setPiece(rook2);
+
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+						
+		//check if number of moves is equal to expected value of 1
+		assertEquals(1, moveList.size());
+						
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 5,3));
+	
+	}
+	
+	@Test
+	public void testBlackPawnEmptyBoard() 
+	{
+		
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+		
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(false);
+		Pawn piece = new Pawn(color, 4,  4);
+		piece.setHasMoved(true);
+		board[4][4].setPiece(piece);
+
+		color = new ChessColor(false);
+		Pawn piece2 = new Pawn(color, 2,  1);
+		board[2][1].setPiece(piece2);
+		
+		//---------------------------------------
+		//--- Test Pawn not at initial square ---
+		//---------------------------------------
+		
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+			
+	    //check if number of moves is equal to expected value of 1
+	    assertEquals(1, moveList.size());
+			
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 4,5));
+		
+		//---------------------------------------
+		//----  Test Pawn at initial square  ----
+		//---------------------------------------
+				
+		// get moves
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[2][1].getPiece());
+					
+		//check if number of moves is equal to expected value of 2
+		assertEquals(2, moveList.size());
+					
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 2,2));
+		assertTrue(moveExists(moveList, 2,3));
+	}
+		
+		
+	@Test
+	public void testBlackPawnBoardEdge() 
+	{
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+		
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(false);
+		Pawn piece = new Pawn(color, 0,  7);
+		board[0][7].setPiece(piece);
+
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[0][7].getPiece());
+			
+	    //check if number of moves is equal to expected value of 1
+	    assertEquals(0, moveList.size());	
+	}
+		
+	@Test
+	public void testBlackPawnCaptures() 
+	{
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+			
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(false);
+		Pawn piece = new Pawn(color, 4,  4);
+		piece.setHasMoved(true);
+		board[4][4].setPiece(piece);
+		
+		color = new ChessColor(false);
+		Pawn piece2 = new Pawn(color, 2,  1);
+		board[2][1].setPiece(piece2);
+			
+		color = new ChessColor(false);
+		Pawn piece3 = new Pawn(color, 6,  1);
+		board[6][1].setPiece(piece3);
+
+		color = new ChessColor(true);
+		Pawn whitePiece = new Pawn(color,  6,  2);
+		board[6][2].setPiece(whitePiece);
+				
+		color = new ChessColor(true);
+		Pawn whitePiece2 = new Pawn(color,  2,  3);
+		board[2][3].setPiece(whitePiece2);
+				
+		color = new ChessColor(true);
+		Pawn whitePiece3 = new Pawn(color,  3,  2);
+		board[3][2].setPiece(whitePiece3);
+				
+		color = new ChessColor(true);
+		Pawn whitePiece4 = new Pawn(color,  4,  6);
+		board[4][6].setPiece(whitePiece4);	
+			
+		color = new ChessColor(true);
+		Pawn whitePiece5 = new Pawn(color,  5,  5);
+		board[5][5].setPiece(whitePiece5);	
+			
+		//---------------------------------------
+		//--- Test Pawn not at initial square ---
+		//---------------------------------------
+			
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+				
+		//check if number of moves is equal to expected value of 2
+		assertEquals(2, moveList.size());
+				
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 4,5));
+		assertTrue(moveExists(moveList, 5,5));
+			
+		//---------------------------------------
+		//----  Test Pawn at initial square  ----
+		//---------------------------------------
+					
+		// get moves
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[2][1].getPiece());
+						
+		//check if number of moves is equal to expected value of 2
+		assertEquals(2, moveList.size());
+						
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 2,2));
+		assertTrue(moveExists(moveList, 3,2));
+		
+		// get moves
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[6][1].getPiece());
+								
+		//check if number of moves is equal to expected value of 2
+		assertEquals(0, moveList.size());
+	}
+		
+	@Test
+	public void testBlackPawnPieceConflicts() 
+	{
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+					
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(false);
+		Pawn piece = new Pawn(color, 4,  4);
+		piece.setHasMoved(true);
+		board[4][4].setPiece(piece);
+				
+		color = new ChessColor(false);
+		Pawn piece2 = new Pawn(color, 2,  1);
+		board[2][1].setPiece(piece2);
+					
+		color = new ChessColor(false);
+		Pawn piece3 = new Pawn(color, 6,  1);
+		board[6][1].setPiece(piece3);
+
+		color = new ChessColor(false);
+		Pawn piece4 = new Pawn(color,  6,  2);
+		board[6][2].setPiece(piece4);
+						
+		color = new ChessColor(false);
+		Pawn piece5 = new Pawn(color,  2,  3);
+		board[2][3].setPiece(piece5);
+						
+		color = new ChessColor(false);
+		Pawn piece6 = new Pawn(color,  3,  2);
+		board[3][2].setPiece(piece6);
+						
+		color = new ChessColor(false);
+		Pawn piece7 = new Pawn(color,  4,  6);
+		board[4][6].setPiece(piece7);	
+					
+		color = new ChessColor(false);
+		Pawn piece8 = new Pawn(color,  5,  5);
+		board[5][5].setPiece(piece8);	
+					
+		//---------------------------------------
+		//--- Test Pawn not at initial square ---
+		//---------------------------------------
+					
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+						
+		//check if number of moves is equal to expected value of 1
+		assertEquals(1, moveList.size());
+						
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 4,5));
+					
+		//---------------------------------------
+		//----  Test Pawn at initial square  ----
+		//---------------------------------------
+							
+		// get moves
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[2][1].getPiece());
+								
+		//check if number of moves is equal to expected value of 1
+		assertEquals(1, moveList.size());
+								
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 2,2));
+
+		// get moves
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[6][1].getPiece());
+										
+		//check if number of moves is equal to expected value of 2
+		assertEquals(0, moveList.size());
+	}	
+	@Test
+	public void testBlackPawnCheck() 
+	{
+		// Instantiate move validation utility and set up board
+		MoveValidation mv = new MoveValidation();
+		Space[][] board = setupTestBoard();
+					
+		// Add pieces to board for test
+		ChessColor color = new ChessColor(false);
+		Pawn piece = new Pawn(color, 4,  4);
+		piece.setHasMoved(true);
+		board[4][4].setPiece(piece);
+				
+		color = new ChessColor(false);
+		King king = new King(color, 5,  4);
+		board[5][4].setPiece(king);
+					
+		color = new ChessColor(true);
+		Rook rook = new Rook(color, 5,  5);
+		board[5][3].setPiece(rook);
+
+		color = new ChessColor(true);
+		Rook rook2 = new Rook(color, 3,  5);
+		board[3][3].setPiece(rook2);
+
+		// get moves
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece());
+						
+		//check if number of moves is equal to expected value of 1
+		assertEquals(1, moveList.size());
+						
+		//check if number all expected moves exist in returned move list
+		assertTrue(moveExists(moveList, 5,5));
+	
+	}
+	
 }
