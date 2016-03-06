@@ -5,8 +5,10 @@ import java.util.List;
 
 import chess.BoardState.BoardCheck;
 import chess.pieces.Bishop;
+import chess.pieces.King;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
+import chess.pieces.Rook;
 
 public class MoveValidation {
 	
@@ -76,7 +78,7 @@ public class MoveValidation {
 				temp[0] = x3;
 				temp[1] = y1;
 				movesList.add(temp);
-				if (!pawn.getHasMoved()) {
+				if (!pawn.hasMoved()) {
 					Integer y2 = pawn.getY() - 2;
 					Space forward2 = spaces[x3][y2];
 					if (!forward2.isPiece()) {
@@ -154,7 +156,7 @@ public class MoveValidation {
 				temp[0] = x3;
 				temp[1] = y1;
 				movesList.add(temp);
-				if (!pawn.getHasMoved()) {
+				if (!pawn.hasMoved()) {
 					Space forward2 = spaces[x3][y2];
 					if (!forward2.isPiece()) {
 						temp = new Integer[2];
@@ -360,10 +362,11 @@ public class MoveValidation {
 	}
 	
 	public List<Integer[]> getPossibleMovesKing(Space[][] spaces, Piece piece, List<Integer[]> movesList, Boolean isCheck) {
+		King king = (King) piece;
 	    final int[][] offsets = {{1,1},{-1,-1},{1, 0},{-1,0},{-1,1},
 	            {1,-1},{0,-1},{0,1}};
-		int pieceX = piece.getX();
-		int pieceY = piece.getY();
+		int pieceX = king.getX();
+		int pieceY = king.getY();
 		Integer[] coords = new Integer[2];
 		for (int i = 0; i < 8; i++) {
 			int spaceX = pieceX + offsets[i][0];
@@ -371,7 +374,7 @@ public class MoveValidation {
 			if (spaceX >= 0 && spaceX < 8 && spaceY >= 0 && spaceY < 8) {
 				if (spaces[spaceX][spaceY].isPiece()) {
 					Piece temp = spaces[spaceX][spaceY].getPiece();
-					if (!temp.getColor().isWhite().equals(piece.getColor().isWhite)) {
+					if (!temp.getColor().isWhite().equals(king.getColor().isWhite)) {
 						coords = new Integer[2];
 						coords[0] = spaceX;
 						coords[1] = spaceY;
@@ -383,6 +386,42 @@ public class MoveValidation {
 					coords[1] = spaceY;
 					movesList.add(coords);
 				}
+			}
+		}
+		
+		Rook leftRook = null;
+		Rook rightRook = null;
+		
+		if(spaces[king.getX()+3][king.getY()].isPiece() 
+				&& spaces[king.getX()+3][king.getY()].getPiece().getPieceName().equals("R")) {
+			rightRook = (Rook) spaces[king.getX()+3][king.getY()].getPiece();
+		}
+		
+		if(spaces[king.getX()-4][king.getY()].isPiece() 
+				&& spaces[king.getX()-4][king.getY()].getPiece().getPieceName().equals("R")) {
+			leftRook = (Rook) spaces[king.getX()-4][king.getY()].getPiece();
+		}
+		
+		if (leftRook != null) {
+			if (!king.hasMoved() && !leftRook.hasMoved() 
+					&& !spaces[king.getX()-3][king.getY()].isPiece() 
+					&& !spaces[king.getX()-2][king.getY()].isPiece()
+					&& !spaces[king.getX()-1][king.getY()].isPiece()) {
+				coords = new Integer[2];
+				coords[0] = king.getX() - 2;
+				coords[1] = king.getY();
+				movesList.add(coords);
+			}
+		}
+		
+		if (rightRook != null) {
+			if (!king.hasMoved() && !rightRook.hasMoved()
+					&& !spaces[king.getX()+2][king.getY()].isPiece()
+					&& !spaces[king.getX()+1][king.getY()].isPiece()) {
+				coords = new Integer[2];
+				coords[0] = king.getX() + 2;
+				coords[1] = king.getY();
+				movesList.add(coords);
 			}
 		}
 		

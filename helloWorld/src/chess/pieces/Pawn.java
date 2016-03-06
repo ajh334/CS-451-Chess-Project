@@ -17,7 +17,6 @@ import chess.Space;
 public class Pawn extends Piece{
 	private String blackPawnFile = "blackpawn.png";
 	private String whitePawnFile = "whitepawn.png";
-	private Boolean hasMoved = false;
 	private Boolean enPassantPossible = false;
 
 	public Pawn(ChessColor color, Integer x, Integer y) {
@@ -48,14 +47,6 @@ public class Pawn extends Piece{
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	public Boolean getHasMoved() {
-		return hasMoved;
-	}
-
-	public void setHasMoved(Boolean hasMoved) {
-		this.hasMoved = hasMoved;
 	}
 
 /*	public Integer getX() {

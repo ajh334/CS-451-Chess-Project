@@ -13,6 +13,7 @@ public class Piece {
 	protected BufferedImage image;
 	protected Integer x;
 	protected Integer y;
+	protected Boolean hasMoved = false;
 
 	public ChessColor getColor() {
 		return color;
@@ -52,5 +53,13 @@ public class Piece {
 
 	public void setPieceName(String pieceName) {
 		this.pieceName = pieceName;
+	}
+
+	public Boolean hasMoved() {
+		return hasMoved;
+	}
+
+	public void setHasMoved(Boolean hasMoved) {
+		this.hasMoved = hasMoved;
 	}
 }

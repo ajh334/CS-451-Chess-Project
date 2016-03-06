@@ -34,7 +34,7 @@ public class BoardGUI {
     private final int BLACK_START_ROW = 7;
     private ArrayList<Integer[]> highlightedSpaces;
     private Boolean whiteTurn = true;
-    private BoardState state;
+    private BoardState state = new BoardState();
     
     public BoardGUI() {
     	initializeBoardGui();
@@ -270,21 +270,123 @@ public class BoardGUI {
     	Integer pieceX = piece.getX();
     	Integer pieceY = piece.getY();
     	deHighlightButtons();
-    	spaces[pieceX][pieceY].deletePiece();
-    	piece.setX(x);
-    	piece.setY(y);
-    	spaces[x][y].setPiece(piece);
-    	spaces[x][y].addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				movePiece(piece, x, y);
-			}
-		});
+    	if(!piece.getPieceName().equals("K") && !piece.getPieceName().equals("P")) {
+        	spaces[pieceX][pieceY].deletePiece();
+        	piece.setX(x);
+        	piece.setY(y);
+        	piece.setHasMoved(true);
+        	spaces[x][y].setPiece(piece);
+        	spaces[x][y].addActionListener(new ActionListener() {
+    			@Override
+    			public void actionPerformed(ActionEvent arg0) {
+    				movePiece(piece, x, y);
+    			}
+    		});
+    	} else if(piece.getPieceName().equals("K")){
+    		moveKing(piece, x, y, pieceX, pieceY);
+    	} else {
+    		movePawn(piece, x, y, pieceX, pieceY);
+    	}
+    	
+    	
     	this.state.setBoardCheck(mv.isSinglePieceCheck(spaces, piece));
     	this.whiteTurn = !this.whiteTurn;
     }
     
+    public void moveKing(Piece piece, Integer x, Integer y, Integer pieceX, Integer pieceY) {
+    	if(pieceX - 2 == x) {
+			Rook rook = (Rook) spaces[pieceX-4][pieceY].getPiece();
+			spaces[pieceX-4][pieceY].deletePiece();
+        	spaces[pieceX][pieceY].deletePiece();
+        	piece.setX(x);
+        	piece.setY(y);
+        	rook.setX(x+1);
+        	rook.setY(y);
+        	piece.setHasMoved(true);
+        	rook.setHasMoved(true);
+        	spaces[x][y].setPiece(piece);
+        	spaces[x+1][y].setPiece(rook);
+        	spaces[x][y].addActionListener(new ActionListener() {
+    			@Override
+    			public void actionPerformed(ActionEvent arg0) {
+    				movePiece(piece, x, y);
+    			}
+    		});
+        	spaces[x+1][y].addActionListener(new ActionListener() {
+    			@Override
+    			public void actionPerformed(ActionEvent arg0) {
+    				movePiece(piece, x, y);
+    			}
+    		});
+        	
+		} else if (pieceX + 2 == x) {
+			Rook rook = (Rook) spaces[pieceX+3][pieceY].getPiece();
+			spaces[pieceX+3][pieceY].deletePiece();
+        	spaces[pieceX][pieceY].deletePiece();
+        	piece.setX(x);
+        	piece.setY(y);
+        	rook.setX(x-1);
+        	rook.setY(y);
+        	piece.setHasMoved(true);
+        	rook.setHasMoved(true);
+        	spaces[x][y].setPiece(piece);
+        	spaces[x-1][y].setPiece(rook);
+        	spaces[x][y].addActionListener(new ActionListener() {
+    			@Override
+    			public void actionPerformed(ActionEvent arg0) {
+    				movePiece(piece, x, y);
+    			}
+    		});
+        	spaces[x-1][y].addActionListener(new ActionListener() {
+    			@Override
+    			public void actionPerformed(ActionEvent arg0) {
+    				movePiece(piece, x, y);
+    			}
+    		});
+		} else {
+        	spaces[pieceX][pieceY].deletePiece();
+        	piece.setX(x);
+        	piece.setY(y);
+        	spaces[x][y].setPiece(piece);
+        	piece.setHasMoved(true);
+        	spaces[x][y].addActionListener(new ActionListener() {
+    			@Override
+    			public void actionPerformed(ActionEvent arg0) {
+    				movePiece(piece, x, y);
+    			}
+    		});
+		}
+    }
     
+    public void movePawn(Piece piece, Integer x, Integer y, Integer pieceX, Integer pieceY) {
+    	Pawn pawn = (Pawn) piece;
+    	if(pieceY - 2 == y || pieceY + 2 == y) {
+        	spaces[pieceX][pieceY].deletePiece();
+        	pawn.setX(x);
+        	pawn.setY(y);
+        	pawn.setHasMoved(true);
+        	pawn.setEnPassantPossible(true);
+        	spaces[x][y].setPiece(pawn);
+        	spaces[x][y].addActionListener(new ActionListener() {
+    			@Override
+    			public void actionPerformed(ActionEvent arg0) {
+    				movePiece(pawn, x, y);
+    			}
+    		});
+		} else {
+        	spaces[pieceX][pieceY].deletePiece();
+        	pawn.setX(x);
+        	pawn.setY(y);
+        	spaces[x][y].setPiece(pawn);
+        	pawn.setHasMoved(true);
+        	spaces[x][y].addActionListener(new ActionListener() {
+    			@Override
+    			public void actionPerformed(ActionEvent arg0) {
+    				movePiece(pawn, x, y);
+    			}
+    		});
+		}
+    }
     
     public final JComponent getGUI() {
     	return gui;
