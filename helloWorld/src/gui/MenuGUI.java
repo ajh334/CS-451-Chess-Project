@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import chess.ChessBoard;
+
 import chess.ChessColor;
 import chess.Space;
 import chess.pieces.Pawn;

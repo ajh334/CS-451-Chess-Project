@@ -124,7 +124,7 @@ public class BoardGUITest {
 		spaces[7][4].setPiece(piece5);
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[3][4].getPiece());
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[3][4].getPiece(), false);
 		
 		
 		gui.addHighlightListener(spaces[3][4]);
@@ -191,7 +191,7 @@ public class BoardGUITest {
 		spaces[7][4].setPiece(piece5);
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[3][4].getPiece());
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[3][4].getPiece(), false);
 		
 		gui.addHighlightListener(spaces[3][4]);
 		
@@ -252,7 +252,7 @@ public class BoardGUITest {
 		spaces[7][4].setPiece(piece5);
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[3][4].getPiece());
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[3][4].getPiece(), false);
 		
 		gui.addHighlightListener(spaces[3][4]);
 		
@@ -324,7 +324,7 @@ public class BoardGUITest {
 			
 			
 			// get moves
-			ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[7][0].getPiece());
+			ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[7][0].getPiece(), false);
 			
 			// select piece a second time.
 			gui.addHighlightListener(spaces[7][0]);
@@ -389,7 +389,7 @@ public class BoardGUITest {
 		spaces[7][4].setPiece(piece5);
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[3][4].getPiece());
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[3][4].getPiece(), false);
 		
 		gui.addHighlightListener(spaces[3][4]);
 		

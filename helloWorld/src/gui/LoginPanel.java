@@ -12,7 +12,6 @@ import javax.swing.border.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import chess.ChessBoard;
 import chess.ChessColor;
 import chess.Space;
 import chess.pieces.Pawn;

@@ -12,18 +12,18 @@ import javax.imageio.ImageIO;
 import chess.ChessColor;
 
 public class Queen extends Piece {
-	private String blackQueenURL = "https://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_black_queen.png";
-	private String whiteQueenURL = "https://upload.wikimedia.org/wikipedia/commons/1/15/Chess_qlt45.svg";
-//	private String pieceName = "Q";
+	private String blackQueenFile = "blackqueen.png";
+	private String whiteQueenFile = "whitequeen.png";
+
 	public Queen(ChessColor color, Integer x, Integer y) {
-		this.pieceName = "Q";
+		this.pieceName = "q";
 		this.x = x;
 		this.y = y;
 		this.color = color;
-		if(color.isWhite()) {
+		if (color.isWhite()) {
 			BufferedImage bi;
 			try {
-				File img = new File("blackqueen.png");
+				File img = new File(whiteQueenFile);
 				bi = ImageIO.read(img);
 				image = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB_PRE);
 				Graphics g = image.getGraphics();
@@ -34,7 +34,7 @@ public class Queen extends Piece {
 		} else {
 			BufferedImage bi;
 			try {
-				File img = new File("blackqueen.png");
+				File img = new File(blackQueenFile);
 				bi = ImageIO.read(img);
 				image = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB_PRE);
 				Graphics g = image.getGraphics();

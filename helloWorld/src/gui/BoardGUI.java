@@ -10,10 +10,14 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import chess.ChessBoard;
+import chess.BoardState;
+import chess.BoardState.BoardCheck;
 import chess.ChessColor;
 import chess.MoveValidation;
 import chess.Space;
+import chess.pieces.Bishop;
+import chess.pieces.King;
+import chess.pieces.Knight;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
 import chess.pieces.Queen;
@@ -22,12 +26,15 @@ import chess.pieces.Rook;
 public class BoardGUI {
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private Space[][] spaces = new Space[8][8];
+    
     private Integer[][] currentBoardState = new Integer[8][8];
+    private MoveValidation mv = new MoveValidation();
     private JPanel chessBoard;
     private final int WHITE_START_ROW = 0;
     private final int BLACK_START_ROW = 7;
     private ArrayList<Integer[]> highlightedSpaces;
     private Boolean whiteTurn = true;
+    private BoardState state;
     
     public BoardGUI() {
     	initializeBoardGui();
@@ -136,6 +143,8 @@ public class BoardGUI {
             }
         }
         populateBoard(spaces);
+    	state.setCurrentBoardState(spaces);
+    	state.setBoardCheck(BoardCheck.NO_CHECK);
     }
     
     public void populateBoard(Space[][] spaces) {
@@ -145,16 +154,26 @@ public class BoardGUI {
     
     public void populateWhitePieces(Space[][] spaces) {
 		boolean white = true;
+		ChessColor color = new ChessColor(white);
     	for (int i = 6; i < 8; i++) {
     		for (int j=0; j < 8; j++) {
     			if(i == 7) {
     				Space temp = spaces[j][i];
-    				ChessColor color = new ChessColor(white);
-    				Pawn piece = new Pawn(color, j, i);
+    				Piece piece = null;
+    				if(j == 0 || j == 7) {
+        				piece = new Rook(color, j, i);
+    				} else if (j == 1 || j == 6) {
+        				piece = new Knight(color, j, i);
+    				} else if(j == 2 || j == 5) {
+        				piece = new Bishop(color, j, i);
+    				} else if(j == 3) {
+        				piece = new Queen(color, j, i);
+    				} else {
+        				piece = new King(color, j, i);
+    				}
     				temp.setPiece(piece);
     			} else if (i == 6) {
     				Space temp = spaces[j][i];
-    				ChessColor color = new ChessColor(white);
     				Pawn piece = new Pawn(color, j, i);
     				temp.setPiece(piece);
     			}
@@ -164,17 +183,27 @@ public class BoardGUI {
     
     public void populateBlackPieces(Space[][] spaces) {
 		boolean black = false;
+		ChessColor color = new ChessColor(black);
     	for (int i = 0; i < 2; i++) {
     		for (int j=0; j < 8; j++) {
     			if(i == 1) {
         			Space temp = spaces[j][i];
-        			ChessColor color = new ChessColor(black);
-        			Piece piece = new Rook(color, j, i);
+        			Piece piece = new Pawn(color, j, i);
         			temp.setPiece(piece);
     			} else if (i == 0) {
     				Space temp = spaces[j][i];
-    				ChessColor color = new ChessColor(black);
-    				Piece piece = new Pawn(color, j, i);
+    				Piece piece = null;
+    				if(j == 0 || j == 7) {
+        				piece = new Rook(color, j, i);
+    				} else if (j == 1 || j == 6) {
+        				piece = new Knight(color, j, i);
+    				} else if(j == 2 || j == 5) {
+        				piece = new Bishop(color, j, i);
+    				} else if(j == 3) {
+        				piece = new Queen(color, j, i);
+    				} else {
+        				piece = new King(color, j, i);
+    				}
     				temp.setPiece(piece);
     			}
     		}
@@ -224,8 +253,11 @@ public class BoardGUI {
     
     public void addHighlightListener(Space b) {
     	ArrayList<Integer[]> moveList = new ArrayList<Integer[]>();
-    	MoveValidation mv = new MoveValidation();
-    	moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, b.getPiece());
+    	Boolean check = false;
+    	if(state.getBoardCheck() == BoardCheck.CHECK) {
+    		check = true;
+    	}
+    	moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, b.getPiece(), check);
     	deHighlightButtons();
     	highlightButtons(moveList, b.getPiece());
     }
@@ -244,6 +276,7 @@ public class BoardGUI {
 				movePiece(piece, x, y);
 			}
 		});
+    	this.state.setBoardCheck(mv.isSinglePieceCheck(spaces, piece));
     	this.whiteTurn = !this.whiteTurn;
     }
     
