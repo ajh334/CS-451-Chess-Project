@@ -14,6 +14,7 @@ import chess.ChessColor;
 public class Rook extends Piece {
 	private String blackRookFile = "blackrook.png";
 	private String whiteRookFile = "whiterook.png";
+	private Boolean hasMoved = false;
 	
 	public Rook(ChessColor color, Integer x, Integer y) {
 		this.pieceName = "R";
@@ -43,5 +44,13 @@ public class Rook extends Piece {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public Boolean getHasMoved() {
+		return hasMoved;
+	}
+
+	public void setHasMoved(Boolean hasMoved) {
+		this.hasMoved = hasMoved;
 	}
 }

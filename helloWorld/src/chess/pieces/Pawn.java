@@ -19,9 +19,6 @@ public class Pawn extends Piece{
 	private String whitePawnFile = "whitepawn.png";
 	private Boolean hasMoved = false;
 	private Boolean enPassantPossible = false;
-//	private BufferedImage image;
-/*	private Integer x;
-	private Integer y;*/
 
 	public Pawn(ChessColor color, Integer x, Integer y) {
 		this.pieceName = "P";

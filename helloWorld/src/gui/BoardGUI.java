@@ -142,17 +142,17 @@ public class BoardGUI {
                         chessBoard.add(spaces[j][i]);
             }
         }
-        populateBoard(spaces);
+        populateBoard();
     	state.setCurrentBoardState(spaces);
     	state.setBoardCheck(BoardCheck.NO_CHECK);
     }
     
-    public void populateBoard(Space[][] spaces) {
-    	populateBlackPieces(spaces);
-    	populateWhitePieces(spaces);
+    public void populateBoard() {
+    	populateBlackPieces();
+    	populateWhitePieces();
     }
     
-    public void populateWhitePieces(Space[][] spaces) {
+    public void populateWhitePieces() {
 		boolean white = true;
 		ChessColor color = new ChessColor(white);
     	for (int i = 6; i < 8; i++) {
@@ -172,16 +172,18 @@ public class BoardGUI {
         				piece = new King(color, j, i);
     				}
     				temp.setPiece(piece);
+        			spaces[j][i] = temp;
     			} else if (i == 6) {
     				Space temp = spaces[j][i];
     				Pawn piece = new Pawn(color, j, i);
     				temp.setPiece(piece);
+        			spaces[j][i] = temp;
     			}
     		}
     	}
     }
     
-    public void populateBlackPieces(Space[][] spaces) {
+    public void populateBlackPieces() {
 		boolean black = false;
 		ChessColor color = new ChessColor(black);
     	for (int i = 0; i < 2; i++) {
@@ -190,6 +192,7 @@ public class BoardGUI {
         			Space temp = spaces[j][i];
         			Piece piece = new Pawn(color, j, i);
         			temp.setPiece(piece);
+        			spaces[j][i] = temp;
     			} else if (i == 0) {
     				Space temp = spaces[j][i];
     				Piece piece = null;
@@ -205,6 +208,7 @@ public class BoardGUI {
         				piece = new King(color, j, i);
     				}
     				temp.setPiece(piece);
+        			spaces[j][i] = temp;
     			}
     		}
     	}
