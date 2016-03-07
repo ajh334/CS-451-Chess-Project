@@ -1,4 +1,7 @@
-/clientserver/
 /chess/
+/clientserver/
+/database/
 /gui/
+/panels/
+/test/
 /unit_tests/

@@ -220,12 +220,12 @@ public class LoginPanel extends JPanel
 			{
 			error.setForeground(Color.GREEN);
 			error.setText("Authorized. Logging in...");
-			
+			MenuGUI menu = new MenuGUI(user);
 	    	ChessChamp.f.dispose();
 	    	frameMenu.setSize(805,525);
 	    	frameMenu.setLocationByPlatform(true);
 	    	frameMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    	frameMenu.setContentPane(new MenuGUI(user));
+	    	frameMenu.setContentPane(menu.getPanel());
 			frameMenu.pack();
 			frameMenu.setVisible(true);
 			}
