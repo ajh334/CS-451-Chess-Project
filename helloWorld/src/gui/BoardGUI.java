@@ -65,6 +65,7 @@ public class BoardGUI {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+            	changeTurn();
             }
         };
         tools.add(concedeAction);
@@ -386,6 +387,44 @@ public class BoardGUI {
     			}
     		});
 		}
+    }
+    
+    public void changeTurn() {
+    	if(whiteTurn) {
+    		for(int i = 0; i < 8; i++) {
+    			for(int j = 0; j < 8; j++) {
+    				if(spaces[i][j].isPiece() && !spaces[i][j].getPiece().getColor().isWhite()) {
+    					spaces[i][j].removeAllActionListeners();
+    				} else if (spaces[i][j].isPiece() && spaces[i][j].getPiece().getColor().isWhite()){
+    					int x = i;
+    					int y = j;
+    		        	spaces[i][j].addActionListener(new ActionListener() {
+    		    			@Override
+    		    			public void actionPerformed(ActionEvent arg0) {
+    		    				movePiece(spaces[x][y].getPiece(), x, y);
+    		    			}
+    		    		});
+        			}
+    			}
+    		}
+    	} else {
+    		for(int i = 0; i < 8; i++) {
+    			for(int j = 0; j < 8; j++) {
+    				if(spaces[i][j].isPiece() && spaces[i][j].getPiece().getColor().isWhite()) {
+    					spaces[i][j].removeAllActionListeners();
+    				} else if (spaces[i][j].isPiece() && !spaces[i][j].getPiece().getColor().isWhite()){
+    					int x = i;
+    					int y = j;
+    		        	spaces[i][j].addActionListener(new ActionListener() {
+    		    			@Override
+    		    			public void actionPerformed(ActionEvent arg0) {
+    		    				movePiece(spaces[x][y].getPiece(), x, y);
+    		    			}
+    		    		});
+        			}
+    			}
+    		}
+    	}
     }
     
     public final JComponent getGUI() {
