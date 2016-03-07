@@ -266,33 +266,34 @@ public class BoardGUI {
     	deHighlightButtons();
     	highlightButtons(moveList, b.getPiece());
     }
-    
-    public void movePiece(Piece piece, Integer x, Integer y) {
-    	Integer pieceX = piece.getX();
-    	Integer pieceY = piece.getY();
-    	deHighlightButtons();
-    	if(!piece.getPieceName().equals("K") && !piece.getPieceName().equals("P")) {
-        	spaces[pieceX][pieceY].deletePiece();
-        	piece.setX(x);
-        	piece.setY(y);
-        	piece.setHasMoved(true);
-        	spaces[x][y].setPiece(piece);
-        	spaces[x][y].addActionListener(new ActionListener() {
-    			@Override
-    			public void actionPerformed(ActionEvent arg0) {
-    				movePiece(piece, x, y);
-    			}
-    		});
-    	} else if(piece.getPieceName().equals("K")){
-    		moveKing(piece, x, y, pieceX, pieceY);
-    	} else {
-    		movePawn(piece, x, y, pieceX, pieceY);
-    	}
-    	
-    	
-    	this.state.setBoardCheck(mv.isSinglePieceCheck(spaces, piece));
-    	this.whiteTurn = !this.whiteTurn;
-    }
+
+	public void movePiece(Piece piece, Integer x, Integer y) {
+		Integer pieceX = piece.getX();
+		Integer pieceY = piece.getY();
+		if (pieceX != x || pieceY != y) {
+			deHighlightButtons();
+			if (!piece.getPieceName().equals("K") && !piece.getPieceName().equals("P")) {
+				spaces[pieceX][pieceY].deletePiece();
+				piece.setX(x);
+				piece.setY(y);
+				piece.setHasMoved(true);
+				spaces[x][y].setPiece(piece);
+				spaces[x][y].addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						movePiece(piece, x, y);
+					}
+				});
+			} else if (piece.getPieceName().equals("K")) {
+				moveKing(piece, x, y, pieceX, pieceY);
+			} else {
+				movePawn(piece, x, y, pieceX, pieceY);
+			}
+
+			this.state.setBoardCheck(mv.isSinglePieceCheck(spaces, piece));
+			this.whiteTurn = !this.whiteTurn;
+		}
+	}
     
     public void moveKing(Piece piece, Integer x, Integer y, Integer pieceX, Integer pieceY) {
     	if(pieceX - 2 == x) {
@@ -344,7 +345,7 @@ public class BoardGUI {
     				movePiece(piece, x, y);
     			}
     		});
-		} else {
+		} else if(pieceX != x || pieceY != y){
         	spaces[pieceX][pieceY].deletePiece();
         	piece.setX(x);
         	piece.setY(y);
@@ -374,7 +375,7 @@ public class BoardGUI {
     				movePiece(pawn, x, y);
     			}
     		});
-		} else {
+		} else if(pieceY != y) {
         	spaces[pieceX][pieceY].deletePiece();
         	pawn.setX(x);
         	pawn.setY(y);
