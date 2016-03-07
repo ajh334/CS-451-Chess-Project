@@ -28,7 +28,7 @@ public class BoardGUITest {
 	@Test
 	public void testInitializeBoardGui() {
 		
-		BoardGUI gui = new BoardGUI();
+		BoardGUI gui = new BoardGUI(true);
 
 		Space[][] spaces = gui.getSpaces();
 		
@@ -91,7 +91,7 @@ public class BoardGUITest {
 	@Test
 	public void testHighlightBoard() 
 	{
-		BoardGUI gui = new BoardGUI();
+		BoardGUI gui = new BoardGUI(true);
 
 		Space[][] spaces = gui.getSpaces();
 		
@@ -158,7 +158,7 @@ public class BoardGUITest {
 	@Test
 	public void testDehighlightBoard() 
 	{
-		BoardGUI gui = new BoardGUI();
+		BoardGUI gui = new BoardGUI(true);
 
 		Space[][] spaces = gui.getSpaces();
 		
@@ -219,7 +219,7 @@ public class BoardGUITest {
 	@Test
 	public void testDeselectPiece() 
 	{
-		BoardGUI gui = new BoardGUI();
+		BoardGUI gui = new BoardGUI(true);
 
 		Space[][] spaces = gui.getSpaces();
 		
@@ -283,7 +283,7 @@ public class BoardGUITest {
 		@Test
 		public void testChangeSelection() 
 		{
-			BoardGUI gui = new BoardGUI();
+			BoardGUI gui = new BoardGUI(true);
 
 			Space[][] spaces = gui.getSpaces();
 			
@@ -356,7 +356,7 @@ public class BoardGUITest {
 	@Test
 	public void testMovePiece() 
 	{
-		BoardGUI gui = new BoardGUI();
+		BoardGUI gui = new BoardGUI(true);
 
 		Space[][] spaces = gui.getSpaces();
 		

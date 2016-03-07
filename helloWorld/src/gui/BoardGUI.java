@@ -35,13 +35,17 @@ public class BoardGUI {
     private ArrayList<Integer[]> highlightedSpaces;
     private Boolean whiteTurn = true;
     private BoardState state = new BoardState();
+    private Boolean playerIsWhite;
+    private Boolean hasMovedThisTurn = false;
+    private Piece currentPiece = null;
+    private Integer[] currentPieceOldSpot = new Integer[2];
     
-    public BoardGUI() {
-    	initializeBoardGui();
+    public BoardGUI(Boolean playerIsWhite) {
+    	initializeBoardGui(playerIsWhite);
     }
 	
 
-    public final void initializeBoardGui() {
+    public final void initializeBoardGui(Boolean playerIsWhite) {
 
         // set up the main GUI
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -66,6 +70,7 @@ public class BoardGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
             	changeTurn();
+            	
             }
         };
         tools.add(concedeAction);
@@ -129,7 +134,7 @@ public class BoardGUI {
                 b.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						if(b.getPiece() != null) {
+						if(b.getPiece() != null && b.getPiece().getColor().isWhite() && playerIsWhite) {
 							addHighlightListener(b);
 						}
 					}
@@ -262,7 +267,14 @@ public class BoardGUI {
     	if(state.getBoardCheck() == BoardCheck.CHECK) {
     		check = true;
     	}
+    	if(currentPiece != null) {
+    		b.getPiece().setX(currentPieceOldSpot[0]);
+    		b.getPiece().setY(currentPieceOldSpot[1]);
+    	}
     	moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, b.getPiece(), check);
+    	if(currentPieceOldSpot[0] != null) {
+    		moveList.add(currentPieceOldSpot);
+    	}
     	deHighlightButtons();
     	highlightButtons(moveList, b.getPiece());
     }
@@ -271,7 +283,6 @@ public class BoardGUI {
 		Integer pieceX = piece.getX();
 		Integer pieceY = piece.getY();
 		if (pieceX != x || pieceY != y) {
-			deHighlightButtons();
 			if (!piece.getPieceName().equals("K") && !piece.getPieceName().equals("P")) {
 				spaces[pieceX][pieceY].deletePiece();
 				piece.setX(x);
@@ -289,9 +300,18 @@ public class BoardGUI {
 			} else {
 				movePawn(piece, x, y, pieceX, pieceY);
 			}
-
+			this.hasMovedThisTurn = true;
 			this.state.setBoardCheck(mv.isSinglePieceCheck(spaces, piece));
 			this.whiteTurn = !this.whiteTurn;
+			if(currentPiece == null) {
+				currentPieceOldSpot[0] = pieceX;
+				currentPieceOldSpot[1] = pieceY;
+				currentPiece = piece;
+			} else if(currentPiece.equals(piece) && piece.getX().equals(currentPieceOldSpot[0]) 
+					&& piece.getY().equals(currentPieceOldSpot[1])) {
+				currentPiece = null;
+				currentPieceOldSpot = new Integer[2];
+			}
 		}
 	}
     
@@ -375,7 +395,16 @@ public class BoardGUI {
     				movePiece(pawn, x, y);
     			}
     		});
-		} else if(pieceY != y) {
+		} else if ((piece.getColor().isWhite() && y == 0) || (!piece.getColor().isWhite() && y == 7)){
+//			Piece p = getPawnPromotion(piece.getColor(), x, y);
+			pawnPromotion(pawn, x, y, pieceX, pieceY);
+        	spaces[x][y].addActionListener(new ActionListener() {
+    			@Override
+    			public void actionPerformed(ActionEvent arg0) {
+    				movePiece(pawn, x, y);
+    			}
+    		});
+    	} else if (pieceY != y) {
         	spaces[pieceX][pieceY].deletePiece();
         	pawn.setX(x);
         	pawn.setY(y);
@@ -390,8 +419,19 @@ public class BoardGUI {
 		}
     }
     
+    public void pawnPromotion(Piece piece, Integer x, Integer y, Integer pieceX, Integer pieceY) {
+    	spaces[pieceX][pieceY].deletePiece();
+    	piece.setX(x);
+    	piece.setY(y);
+    	spaces[x][y].setPiece(piece);
+    }
+    
     public void changeTurn() {
-    	if(whiteTurn) {
+		deHighlightButtons();
+    	playerIsWhite = !playerIsWhite;
+    	hasMovedThisTurn = !hasMovedThisTurn;
+    	currentPiece = null;
+    	if(whiteTurn && playerIsWhite) {
     		for(int i = 0; i < 8; i++) {
     			for(int j = 0; j < 8; j++) {
     				if(spaces[i][j].isPiece() && !spaces[i][j].getPiece().getColor().isWhite()) {
@@ -408,7 +448,7 @@ public class BoardGUI {
         			}
     			}
     		}
-    	} else {
+    	} else if(!whiteTurn && !playerIsWhite){
     		for(int i = 0; i < 8; i++) {
     			for(int j = 0; j < 8; j++) {
     				if(spaces[i][j].isPiece() && spaces[i][j].getPiece().getColor().isWhite()) {
@@ -428,6 +468,16 @@ public class BoardGUI {
     	}
     }
     
+    public void disablePieces(Piece piece) {
+    	for(int i = 0; i < 8; i++) {
+    		for(int j = 0; j < 8; j++) {
+    			if(i != piece.getX() && j != piece.getY()){
+        			spaces[i][j].removeAllActionListeners();
+    			}
+    		}
+    	}
+    }
+    
     public final JComponent getGUI() {
     	return gui;
     }
@@ -435,4 +485,24 @@ public class BoardGUI {
     public final Space[][] getSpaces() {
     	return spaces;
     }
+
+
+	public Boolean getPlayerIsWhite() {
+		return playerIsWhite;
+	}
+
+
+	public void setPlayerIsWhite(Boolean playerIsWhite) {
+		this.playerIsWhite = playerIsWhite;
+	}
+
+
+	public Boolean getHasMovedThisTurn() {
+		return hasMovedThisTurn;
+	}
+
+
+	public void setHasMovedThisTurn(Boolean hasMovedThisTurn) {
+		this.hasMovedThisTurn = hasMovedThisTurn;
+	}
 }

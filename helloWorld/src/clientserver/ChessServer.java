@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * A server for a network multi-player tic tac toe game.  Modified and
@@ -18,10 +20,10 @@ import java.net.Socket;
  *
  *  Client -> Server           Server -> Client
  *  ----------------           ----------------
- *  MOVE <n>  (0 <= n <= 8)    WELCOME <char>  (char in {X, O})
- *  QUIT                       VALID_MOVE
- *                             OTHER_PLAYER_MOVED <n>
- *                             VICTORY
+ *  MOVE       				   WELCOME <char>  (char in {X, O})
+ *  DRAW                       VALID_MOVE
+ *  CONCEDE                    OTHER_PLAYER_MOVED <n>
+ *  QUIT                       VICTORY
  *                             DEFEAT
  *                             TIE
  *                             MESSAGE <text>
@@ -41,8 +43,8 @@ public class ChessServer
         try {
             while (true) {
                 Game game = new Game();
-                Game.Player white = game.new Player(listener.accept(), 'W');
-                Game.Player black = game.new Player(listener.accept(), 'B');
+                Game.Player white = game.new Player(listener.accept(), true);
+                Game.Player black = game.new Player(listener.accept(), false);
                 white.setOpponent(black);
                 black.setOpponent(white);
                 game.currentPlayer = white;
@@ -134,7 +136,7 @@ class Game {
      * reader and a writer.
      */
     class Player extends Thread {
-        char mark;
+    	Boolean isWhite;
         Player opponent;
         Socket socket;
         BufferedReader input;
@@ -145,14 +147,14 @@ class Game {
          * initializes the stream fields, displays the first two
          * welcoming messages.
          */
-        public Player(Socket socket, char mark) {
+        public Player(Socket socket, Boolean isWhite) {
             this.socket = socket;
-            this.mark = mark;
+            this.isWhite = isWhite;
             try {
                 input = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()));
                 output = new PrintWriter(socket.getOutputStream(), true);
-                output.println("WELCOME " + mark);
+                output.println("WELCOME " + isWhite);
                 output.println("MESSAGE Waiting for opponent to connect");
             } catch (IOException e) {
                 System.out.println("Player died: " + e);
@@ -184,7 +186,7 @@ class Game {
                 output.println("MESSAGE All players connected");
 
                 // Tell the first player that it is her turn.
-                if (mark == 'X') {
+                if (isWhite) {
                     output.println("MESSAGE Your move");
                 }
 
@@ -192,6 +194,9 @@ class Game {
                 while (true) {
                     String command = input.readLine();
                     if (command.startsWith("MOVE")) {
+                    	JSONArray jsonArr = new JSONArray(command.replace("MOVE", ""));
+                    	JSONArray jsonArr2 = new JSONArray();
+                    	JSONObject space = new JSONObject();
                         int location = Integer.parseInt(command.substring(5));
                         if (legalMove(location, this)) {
                             output.println("VALID_MOVE");

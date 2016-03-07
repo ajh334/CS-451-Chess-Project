@@ -201,7 +201,7 @@ public class LoginPanel extends JPanel
     	
     	try 
     	{
-			con = DriverManager.getConnection("jdbc:mysql://localhost/test", "chesschamp", "chesschamp");			
+			con = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "D4vinci1337");			
 			Statement st = con.createStatement();
 			
 			ResultSet rs = st.executeQuery("select username from login");

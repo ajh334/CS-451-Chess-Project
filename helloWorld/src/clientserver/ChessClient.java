@@ -16,6 +16,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import chess.BoardState;
+import gui.BoardGUI;
+
 /**
  * A client for the TicTacToe game, modified and extended from the
  * class presented in Deitel and Deitel "Java How to Program" book.
@@ -25,10 +31,10 @@ import javax.swing.JPanel;
  *
  *  Client -> Server           Server -> Client
  *  ----------------           ----------------
- *  MOVE <n>  (0 <= n <= 8)    WELCOME <char>  (char in {X, O})
- *  QUIT                       VALID_MOVE
- *                             OTHER_PLAYER_MOVED <n>
- *                             VICTORY
+ *  MOVE       				   WELCOME <char>  (char in {X, O})
+ *  DRAW                       VALID_MOVE
+ *  CONCEDE                    OTHER_PLAYER_MOVED <n>
+ *  QUIT                       VICTORY
  *                             DEFEAT
  *                             TIE
  *                             MESSAGE <text>
@@ -74,10 +80,16 @@ public class ChessClient {
             board[i].addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent e) {
                     currentSquare = board[j];
-                    out.println("MOVE " + j);}});
+                    out.println("MOVE" + j);}});
             boardPanel.add(board[i]);
         }
         frame.getContentPane().add(boardPanel, "Center");
+    }
+    
+    public boolean findGame() throws Exception{ 
+    	
+    	
+    	return false;
     }
 
     /**
@@ -133,6 +145,11 @@ public class ChessClient {
             socket.close();
         }
     }
+    
+    public void endTurn(BoardState bs) {
+    	JSONObject obj = new JSONObject(bs);
+    	out.println("MOVE" + obj);
+    }
 
     private boolean wantsToPlayAgain() {
         int response = JOptionPane.showConfirmDialog(frame,
@@ -165,13 +182,17 @@ public class ChessClient {
      * Runs the client as an application.
      */
     public static void main(String[] args) throws Exception {
+        String serverAddress = (args.length == 0) ? "localhost" : args[1];
+        ChessClient client = new ChessClient(serverAddress);
+        Boolean playerIsWhite = false;
         while (true) {
-            String serverAddress = (args.length == 0) ? "localhost" : args[1];
-            ChessClient client = new ChessClient(serverAddress);
-            client.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            client.frame.setSize(240, 160);
-            client.frame.setVisible(true);
-            client.frame.setResizable(false);
+        	playerIsWhite = client.findGame();
+            if (!client.wantsToPlayAgain()) {
+                break;
+            }
+        }
+        
+        while (true) {
             client.play();
             if (!client.wantsToPlayAgain()) {
                 break;
