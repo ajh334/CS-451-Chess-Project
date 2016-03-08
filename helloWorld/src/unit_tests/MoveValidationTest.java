@@ -67,7 +67,7 @@ public class MoveValidationTest {
 		board[3][4].setPiece(piece);
 		
 		// get mooves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[3][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[3][4].getPiece(), false, false);
 		
         //check if number of moves is equal to expected value of 14
 		assertEquals(14, moveList.size());
@@ -104,7 +104,7 @@ public class MoveValidationTest {
 		board[0][0].setPiece(piece);
 		
 		// get mooves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[0][0].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[0][0].getPiece(), false, false);
 		
         //check if number of moves is equal to expected value of 14
 		
@@ -156,7 +156,7 @@ public class MoveValidationTest {
 		board[7][4].setPiece(piece5);
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[3][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[3][4].getPiece(), false, false);
 		
         //check if number of moves is equal to expected value of 12
 		
@@ -207,7 +207,7 @@ public class MoveValidationTest {
 		board[7][4].setPiece(piece5);
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[3][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[3][4].getPiece(), false, false);
 		
         //check if number of moves is equal to expected value of 8
 		
@@ -260,7 +260,7 @@ public class MoveValidationTest {
 		board[7][4].setPiece( blackPawn3);
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[3][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[3][4].getPiece(), false, false);
 		
         //check if number of moves is equal to expected value of 1
 		
@@ -289,7 +289,7 @@ public class MoveValidationTest {
 		board[4][4].setPiece(piece);
 			
 		// get mooves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 			
 	    //check if number of moves is equal to expected value of 13
 			
@@ -323,7 +323,7 @@ public class MoveValidationTest {
 		board[0][0].setPiece(piece);
 			
 		// get mooves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[0][0].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[0][0].getPiece(), false, false);
 			
 		//check if number of moves is equal to expected value of 7
 			
@@ -367,7 +367,7 @@ public class MoveValidationTest {
 		board[6][2].setPiece(piece5);
 			
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 					
 		//check if number of moves is equal to expected value of 9
 						
@@ -413,7 +413,7 @@ public class MoveValidationTest {
 		board[6][2].setPiece(piece5);
 			
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 					
 		//check if number of moves is equal to expected value of 9
 						
@@ -458,7 +458,7 @@ public class MoveValidationTest {
 		board[6][2].setPiece(piece5);
 			
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 						
 		//check if number of moves is equal to expected value of 1
 						
@@ -486,7 +486,7 @@ public class MoveValidationTest {
 		board[4][4].setPiece(piece);
 			
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 			
 	    //check if number of moves is equal to expected value of 27
 			
@@ -534,7 +534,7 @@ public class MoveValidationTest {
 		board[0][0].setPiece(piece);
 			
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[0][0].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[0][0].getPiece(), false, false);
 			
 		//check if number of moves is equal to expected value of 21
 			
@@ -610,7 +610,7 @@ public class MoveValidationTest {
 		
 			
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 					
 		//check if number of moves is equal to expected value of 21
 						
@@ -687,7 +687,7 @@ public class MoveValidationTest {
 		
 			
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 					
 		//check if number of moves is equal to expected value of 13
 					
@@ -743,7 +743,7 @@ public class MoveValidationTest {
 		board[6][2].setPiece(piece5);
 			
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 						
 		//check if number of moves is equal to expected value of 13
 						
@@ -772,7 +772,7 @@ public class MoveValidationTest {
 		board[4][4].setPiece(piece);
 
 		// get mooves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 	
 	    //check if number of moves is equal to expected value of 8
 	    assertEquals(8, moveList.size());
@@ -800,7 +800,7 @@ public class MoveValidationTest {
 		board[0][0].setPiece(piece);
 			
 		// get mooves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[0][0].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[0][0].getPiece(), false, false);
 			
 	    //check if number of moves is equal to expected value of 2
 	    assertEquals(2, moveList.size());
@@ -838,7 +838,7 @@ public class MoveValidationTest {
 		board[4][5].setPiece(piece5);
 			
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 			
 	    //check if number of moves is equal to expected value of 8
 			
@@ -883,7 +883,7 @@ public class MoveValidationTest {
 		board[4][5].setPiece(piece5);
 			
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 			
 	    //check if number of moves is equal to expected value of 6
 		for(int i = 0; i < moveList.size(); i++){
@@ -932,7 +932,7 @@ public class MoveValidationTest {
 		board[3][0].setPiece(whiteKing);
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[3][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[3][4].getPiece(), false, false);
 			
 	    //check if number of moves is equal to expected value of 8
 			
@@ -962,7 +962,7 @@ public class MoveValidationTest {
 		board[4][4].setPiece(piece);
 
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 			
 	    //check if number of moves is equal to expected value of 8
 	    assertEquals(8, moveList.size());
@@ -992,7 +992,7 @@ public class MoveValidationTest {
 		board[0][0].setPiece(piece);
 
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[0][0].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[0][0].getPiece(), false, false);
 					
 		//check if number of moves is equal to expected value of 3
 		assertEquals(3, moveList.size());
@@ -1032,7 +1032,7 @@ public class MoveValidationTest {
 		board[5][5].setPiece(piece5);
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 					
 	    //check if number of moves is equal to expected value of 7
 	    assertEquals(7, moveList.size());
@@ -1075,7 +1075,7 @@ public class MoveValidationTest {
 		board[5][5].setPiece(piece5);
 				
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 							
 		//check if number of moves is equal to expected value of 7
 		assertEquals(4, moveList.size());
@@ -1104,7 +1104,7 @@ public class MoveValidationTest {
 		board[3][3].setPiece(piece2);
 				
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 									
 		//check if number of moves is equal to expected value of 1
 		assertEquals(1, moveList.size());
@@ -1152,7 +1152,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 		
 		// get moves for white king
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][7].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][7].getPiece(), false, false);
 									
 		//check if number of moves is equal to expected value of 7
 		assertEquals(7, moveList.size());
@@ -1173,7 +1173,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 				
 		// get moves for black king
-		moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][7].getPiece(), false);
+		moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][7].getPiece(), false, false);
 											
 		//check if number of moves is equal to expected value of 7
 		assertEquals(7, moveList.size());
@@ -1218,7 +1218,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 			
 	    //check if number of moves is equal to expected value of 1
 	    assertEquals(1, moveList.size());
@@ -1231,7 +1231,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 				
 		// get moves
-		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[2][6].getPiece(), false);
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[2][6].getPiece(), false, false);
 					
 		//check if number of moves is equal to expected value of 2
 		assertEquals(2, moveList.size());
@@ -1255,7 +1255,7 @@ public class MoveValidationTest {
 		board[0][0].setPiece(piece);
 
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[0][0].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[0][0].getPiece(), false, false);
 			
 	    //check if number of moves is equal to expected value of 1
 	    assertEquals(0, moveList.size());	
@@ -1307,7 +1307,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 			
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 				
 		//check if number of moves is equal to expected value of 2
 		assertEquals(2, moveList.size());
@@ -1321,7 +1321,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 					
 		// get moves
-		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[2][6].getPiece(), false);
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[2][6].getPiece(), false, false);
 						
 		//check if number of moves is equal to expected value of 2
 		assertEquals(2, moveList.size());
@@ -1331,7 +1331,7 @@ public class MoveValidationTest {
 		assertTrue(moveExists(moveList, 3,5));
 		
 		// get moves
-		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[6][6].getPiece(), false);
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[6][6].getPiece(), false, false);
 								
 		//check if number of moves is equal to expected value of 2
 		assertEquals(0, moveList.size());
@@ -1383,7 +1383,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 					
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 						
 		//check if number of moves is equal to expected value of 1
 		assertEquals(1, moveList.size());
@@ -1396,7 +1396,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 							
 		// get moves
-		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[2][6].getPiece(), false);
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[2][6].getPiece(), false, false);
 								
 		//check if number of moves is equal to expected value of 1
 		assertEquals(1, moveList.size());
@@ -1405,7 +1405,7 @@ public class MoveValidationTest {
 		assertTrue(moveExists(moveList, 2,5));
 
 		// get moves
-		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[6][6].getPiece(), false);
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[6][6].getPiece(), false, false);
 										
 		//check if number of moves is equal to expected value of 2
 		assertEquals(0, moveList.size());
@@ -1437,7 +1437,7 @@ public class MoveValidationTest {
 		board[3][3].setPiece(rook2);
 
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 						
 		//check if number of moves is equal to expected value of 1
 		assertEquals(1, moveList.size());
@@ -1470,7 +1470,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 			
 	    //check if number of moves is equal to expected value of 1
 	    assertEquals(1, moveList.size());
@@ -1483,7 +1483,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 				
 		// get moves
-		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[2][1].getPiece(), false);
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[2][1].getPiece(), false, false);
 					
 		//check if number of moves is equal to expected value of 2
 		assertEquals(2, moveList.size());
@@ -1507,7 +1507,7 @@ public class MoveValidationTest {
 		board[0][7].setPiece(piece);
 
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[0][7].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[0][7].getPiece(), false, false);
 			
 	    //check if number of moves is equal to expected value of 1
 	    assertEquals(0, moveList.size());	
@@ -1559,7 +1559,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 			
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 				
 		//check if number of moves is equal to expected value of 2
 		assertEquals(2, moveList.size());
@@ -1573,7 +1573,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 					
 		// get moves
-		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[2][1].getPiece(), false);
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[2][1].getPiece(), false, false);
 						
 		//check if number of moves is equal to expected value of 2
 		assertEquals(2, moveList.size());
@@ -1583,7 +1583,7 @@ public class MoveValidationTest {
 		assertTrue(moveExists(moveList, 3,2));
 		
 		// get moves
-		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[6][1].getPiece(), false);
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[6][1].getPiece(), false, false);
 								
 		//check if number of moves is equal to expected value of 2
 		assertEquals(0, moveList.size());
@@ -1635,7 +1635,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 					
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 						
 		//check if number of moves is equal to expected value of 1
 		assertEquals(1, moveList.size());
@@ -1648,7 +1648,7 @@ public class MoveValidationTest {
 		//---------------------------------------
 							
 		// get moves
-		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[2][1].getPiece(), false);
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[2][1].getPiece(), false, false);
 								
 		//check if number of moves is equal to expected value of 1
 		assertEquals(1, moveList.size());
@@ -1657,7 +1657,7 @@ public class MoveValidationTest {
 		assertTrue(moveExists(moveList, 2,2));
 
 		// get moves
-		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[6][1].getPiece(), false);
+		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[6][1].getPiece(), false, false);
 										
 		//check if number of moves is equal to expected value of 2
 		assertEquals(0, moveList.size());
@@ -1688,7 +1688,7 @@ public class MoveValidationTest {
 		board[3][3].setPiece(rook2);
 
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(board, board[4][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(board), board[4][4].getPiece(), false, false);
 						
 		//check if number of moves is equal to expected value of 1
 		assertEquals(1, moveList.size());
@@ -1696,6 +1696,18 @@ public class MoveValidationTest {
 		//check if number all expected moves exist in returned move list
 		assertTrue(moveExists(moveList, 5,5));
 	
+	}
+	
+	public Piece[][] addPieces(Space[][] spaces) {
+		Piece[][] pieces = new Piece[8][8];
+		for (int i = 0; i < spaces.length; i++) {
+			for (int j = 0; j < spaces.length; j++) {
+				if (spaces[i][j] != null) {
+					pieces[i][j] = spaces[i][j].getPiece();
+				}
+			}
+		}
+		return pieces;
 	}
 	
 }

@@ -20,6 +20,7 @@ import chess.ChessColor;
 import chess.MoveValidation;
 import chess.Space;
 import chess.pieces.Pawn;
+import chess.pieces.Piece;
 import chess.pieces.Rook;
 import gui.BoardGUI;
 
@@ -124,7 +125,7 @@ public class BoardGUITest {
 		spaces[7][4].setPiece(piece5);
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[3][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(spaces), spaces[3][4].getPiece(), false, false);
 		
 		
 		gui.addHighlightListener(spaces[3][4]);
@@ -191,7 +192,7 @@ public class BoardGUITest {
 		spaces[7][4].setPiece(piece5);
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[3][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(spaces), spaces[3][4].getPiece(), false, false);
 		
 		gui.addHighlightListener(spaces[3][4]);
 		
@@ -252,7 +253,7 @@ public class BoardGUITest {
 		spaces[7][4].setPiece(piece5);
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[3][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(spaces), spaces[3][4].getPiece(), false, false);
 		
 		gui.addHighlightListener(spaces[3][4]);
 		
@@ -324,7 +325,7 @@ public class BoardGUITest {
 			
 			
 			// get moves
-			ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[7][0].getPiece(), false);
+			ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(spaces), spaces[7][0].getPiece(), false, false);
 			
 			// select piece a second time.
 			gui.addHighlightListener(spaces[7][0]);
@@ -389,7 +390,7 @@ public class BoardGUITest {
 		spaces[7][4].setPiece(piece5);
 		
 		// get moves
-		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, spaces[3][4].getPiece(), false);
+		ArrayList<Integer[]> moveList =  (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(spaces), spaces[3][4].getPiece(), false, false);
 		
 		gui.addHighlightListener(spaces[3][4]);
 		
@@ -423,5 +424,17 @@ public class BoardGUITest {
 		}
 			
 		return false;
+	}
+	
+	public Piece[][] addPieces(Space[][] spaces) {
+		Piece[][] pieces = new Piece[8][8];
+		for (int i = 0; i < spaces.length; i++) {
+			for (int j = 0; j < spaces.length; j++) {
+				if (spaces[i][j] != null) {
+					pieces[i][j] = spaces[i][j].getPiece();
+				}
+			}
+		}
+		return pieces;
 	}
 }

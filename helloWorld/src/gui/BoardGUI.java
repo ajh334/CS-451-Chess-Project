@@ -39,6 +39,8 @@ public class BoardGUI {
     private Boolean hasMovedThisTurn = false;
     private Piece currentPiece = null;
     private Integer[] currentPieceOldSpot = new Integer[2];
+    private Integer[] currentPieceSpot = new Integer[2];
+    private Piece[][] pieces = new Piece[8][8];
     
     public BoardGUI(Boolean playerIsWhite) {
     	initializeBoardGui(playerIsWhite);
@@ -46,7 +48,7 @@ public class BoardGUI {
 	
 
     public final void initializeBoardGui(Boolean playerIsWhite) {
-
+    	this.playerIsWhite = playerIsWhite;
         // set up the main GUI
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
         JToolBar tools = new JToolBar();
@@ -267,17 +269,37 @@ public class BoardGUI {
     	if(state.getBoardCheck() == BoardCheck.CHECK) {
     		check = true;
     	}
-    	if(currentPiece != null) {
+    	Integer x = b.getPiece().getX();
+    	Integer y = b.getPiece().getY();
+    	if(currentPiece != null && currentPiece.equals(b.getPiece())) {
     		b.getPiece().setX(currentPieceOldSpot[0]);
     		b.getPiece().setY(currentPieceOldSpot[1]);
     	}
-    	moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(spaces, b.getPiece(), check);
-    	if(currentPieceOldSpot[0] != null) {
+    	
+    	moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(spaces), b.getPiece(), check, false);
+    	
+
+		b.getPiece().setX(x);
+		b.getPiece().setY(y);
+    	if(currentPieceOldSpot[0] != null && currentPiece != null && currentPiece.equals(b.getPiece())) {
     		moveList.add(currentPieceOldSpot);
     	}
     	deHighlightButtons();
     	highlightButtons(moveList, b.getPiece());
     }
+    
+	public Piece[][] addPieces(Space[][] spaces) {
+		Piece[][] pieces = new Piece[8][8];
+		for (int i = 0; i < spaces.length; i++) {
+			for (int j = 0; j < spaces.length; j++) {
+				if (spaces[i][j] != null) {
+					pieces[i][j] = spaces[i][j].getPiece();
+				}
+			}
+		}
+		return pieces;
+	}
+
 
 	public void movePiece(Piece piece, Integer x, Integer y) {
 		Integer pieceX = piece.getX();
@@ -287,7 +309,6 @@ public class BoardGUI {
 				spaces[pieceX][pieceY].deletePiece();
 				piece.setX(x);
 				piece.setY(y);
-				piece.setHasMoved(true);
 				spaces[x][y].setPiece(piece);
 				spaces[x][y].addActionListener(new ActionListener() {
 					@Override
@@ -301,17 +322,21 @@ public class BoardGUI {
 				movePawn(piece, x, y, pieceX, pieceY);
 			}
 			this.hasMovedThisTurn = true;
-			this.state.setBoardCheck(mv.isSinglePieceCheck(spaces, piece));
-			this.whiteTurn = !this.whiteTurn;
+			pieces = addPieces(spaces);
 			if(currentPiece == null) {
 				currentPieceOldSpot[0] = pieceX;
 				currentPieceOldSpot[1] = pieceY;
+				currentPieceSpot[0] = piece.getX();
+				currentPieceSpot[1] = piece.getY();
 				currentPiece = piece;
+				disablePieces();
 			} else if(currentPiece.equals(piece) && piece.getX().equals(currentPieceOldSpot[0]) 
 					&& piece.getY().equals(currentPieceOldSpot[1])) {
 				currentPiece = null;
 				currentPieceOldSpot = new Integer[2];
+				enablePieces();
 			}
+			this.state.setBoardCheck(mv.isSinglePieceCheck(pieces, piece));
 		}
 	}
     
@@ -386,7 +411,6 @@ public class BoardGUI {
         	spaces[pieceX][pieceY].deletePiece();
         	pawn.setX(x);
         	pawn.setY(y);
-        	pawn.setHasMoved(true);
         	pawn.setEnPassantPossible(true);
         	spaces[x][y].setPiece(pawn);
         	spaces[x][y].addActionListener(new ActionListener() {
@@ -409,7 +433,6 @@ public class BoardGUI {
         	pawn.setX(x);
         	pawn.setY(y);
         	spaces[x][y].setPiece(pawn);
-        	pawn.setHasMoved(true);
         	spaces[x][y].addActionListener(new ActionListener() {
     			@Override
     			public void actionPerformed(ActionEvent arg0) {
@@ -428,9 +451,28 @@ public class BoardGUI {
     
     public void changeTurn() {
 		deHighlightButtons();
+		this.whiteTurn = !this.whiteTurn;
     	playerIsWhite = !playerIsWhite;
     	hasMovedThisTurn = !hasMovedThisTurn;
+    	spaces[currentPieceSpot[0]][currentPieceSpot[1]].getPiece().setHasMoved(true);
     	currentPiece = null;
+		currentPieceOldSpot = new Integer[2];
+		enablePieces();
+    }
+    
+	public void disablePieces() {
+		if (currentPiece != null) {
+			for (int i = 0; i < 8; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (i != currentPieceSpot[0] && j != currentPieceSpot[1]) {
+						spaces[i][j].removeAllActionListeners();
+					}
+				}
+			}
+		}
+	}
+	
+	public void enablePieces() {
     	if(whiteTurn && playerIsWhite) {
     		for(int i = 0; i < 8; i++) {
     			for(int j = 0; j < 8; j++) {
@@ -442,7 +484,7 @@ public class BoardGUI {
     		        	spaces[i][j].addActionListener(new ActionListener() {
     		    			@Override
     		    			public void actionPerformed(ActionEvent arg0) {
-    		    				movePiece(spaces[x][y].getPiece(), x, y);
+    							addHighlightListener(spaces[x][y]);
     		    			}
     		    		});
         			}
@@ -459,24 +501,14 @@ public class BoardGUI {
     		        	spaces[i][j].addActionListener(new ActionListener() {
     		    			@Override
     		    			public void actionPerformed(ActionEvent arg0) {
-    		    				movePiece(spaces[x][y].getPiece(), x, y);
+    							addHighlightListener(spaces[x][y]);
     		    			}
     		    		});
         			}
     			}
     		}
     	}
-    }
-    
-    public void disablePieces(Piece piece) {
-    	for(int i = 0; i < 8; i++) {
-    		for(int j = 0; j < 8; j++) {
-    			if(i != piece.getX() && j != piece.getY()){
-        			spaces[i][j].removeAllActionListeners();
-    			}
-    		}
-    	}
-    }
+	}
     
     public final JComponent getGUI() {
     	return gui;
