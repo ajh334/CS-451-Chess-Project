@@ -69,10 +69,10 @@ class Game {
      * otherwise the array cell stores a reference to the player that
      * owns it.
      */
-    private Player[] board = {
-        null, null, null,
-        null, null, null,
-        null, null, null};
+//    private Player[] board = {
+//        null, null, null,
+//        null, null, null,
+//        null, null, null};
 
     /**
      * The current player.
@@ -84,27 +84,15 @@ class Game {
      * of the players is a winner.
      */
     public boolean hasWinner() {
-        return
-            (board[0] != null && board[0] == board[1] && board[0] == board[2])
-          ||(board[3] != null && board[3] == board[4] && board[3] == board[5])
-          ||(board[6] != null && board[6] == board[7] && board[6] == board[8])
-          ||(board[0] != null && board[0] == board[3] && board[0] == board[6])
-          ||(board[1] != null && board[1] == board[4] && board[1] == board[7])
-          ||(board[2] != null && board[2] == board[5] && board[2] == board[8])
-          ||(board[0] != null && board[0] == board[4] && board[0] == board[8])
-          ||(board[2] != null && board[2] == board[4] && board[2] == board[6]);
-    }
-
-    /**
-     * Returns whether there are no more empty squares.
-     */
-    public boolean boardFilledUp() {
-        for (int i = 0; i < board.length; i++) {
-            if (board[i] == null) {
-                return false;
-            }
-        }
-        return true;
+        return false;
+//            (board[0] != null && board[0] == board[1] && board[0] == board[2])
+//          ||(board[3] != null && board[3] == board[4] && board[3] == board[5])
+//          ||(board[6] != null && board[6] == board[7] && board[6] == board[8])
+//          ||(board[0] != null && board[0] == board[3] && board[0] == board[6])
+//          ||(board[1] != null && board[1] == board[4] && board[1] == board[7])
+//          ||(board[2] != null && board[2] == board[5] && board[2] == board[8])
+//          ||(board[0] != null && board[0] == board[4] && board[0] == board[8])
+//          ||(board[2] != null && board[2] == board[4] && board[2] == board[6]);
     }
 
     /**
@@ -117,14 +105,9 @@ class Game {
      * the other player is notified of the move so it can update its
      * client.
      */
-    public synchronized boolean legalMove(int location, Player player) {
-        if (player == currentPlayer && board[location] == null) {
-            board[location] = currentPlayer;
-            currentPlayer = currentPlayer.opponent;
-            currentPlayer.otherPlayerMoved(location);
-            return true;
-        }
-        return false;
+    public void legalMove(JSONObject jo) 
+    {
+            currentPlayer.otherPlayerMoved(jo);
     }
 
     /**
@@ -171,10 +154,10 @@ class Game {
         /**
          * Handles the otherPlayerMoved message.
          */
-        public void otherPlayerMoved(int location) {
-            output.println("OPPONENT_MOVED " + location);
+        public void otherPlayerMoved(JSONObject jo) {
+            output.println("OPPONENT_MOVED " + jo);
             output.println(
-                hasWinner() ? "DEFEAT" : boardFilledUp() ? "TIE" : "");
+                hasWinner() ? "DEFEAT" : "");
         }
 
         /**
@@ -191,29 +174,38 @@ class Game {
                 }
 
                 // Repeatedly get commands from the client and process them.
-                while (true) {
+                while (true) 
+                {
                     String command = input.readLine();
-                    if (command.startsWith("MOVE")) {
+                    if (command.startsWith("MOVE")) 
+                    {
                     	JSONArray jsonArr = new JSONArray(command.replace("MOVE", ""));
                     	JSONArray jsonArr2 = new JSONArray();
                     	JSONObject space = new JSONObject();
-                        int location = Integer.parseInt(command.substring(5));
-                        if (legalMove(location, this)) {
-                            output.println("VALID_MOVE");
-                            output.println(hasWinner() ? "VICTORY"
-                                         : boardFilledUp() ? "TIE"
-                                         : "");
-                        } else {
-                            output.println("MESSAGE ?");
-                        }
-                    } else if (command.startsWith("QUIT")) {
+                    	legalMove(space);
+                    	output.println("VALID_MOVE");
+                    	output.println(hasWinner() ? "VICTORY" : "");
+                    } 
+                    else if (command.startsWith("QUIT")) 
+                    {
                         return;
                     }
                 }
-            } catch (IOException e) {
+            } 
+            catch (IOException e) 
+            {
                 System.out.println("Player died: " + e);
-            } finally {
-                try {socket.close();} catch (IOException e) {}
+            } 
+            finally 
+            {
+                try 
+                {
+                	socket.close();
+                	} 
+                catch (IOException e) 
+                {
+                		
+                	}
             }
         }
     }

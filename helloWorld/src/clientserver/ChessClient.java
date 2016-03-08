@@ -42,7 +42,7 @@ import gui.BoardGUI;
  */
 public class ChessClient {
 
-    private JFrame frame = new JFrame("Tic Tac Toe");
+    private JFrame frame = new JFrame("Chess Champ");
     private JLabel messageLabel = new JLabel("");
     private ImageIcon icon;
     private ImageIcon opponentIcon;

@@ -16,7 +16,7 @@ public class Queen extends Piece {
 	private String whiteQueenFile = "whitequeen.png";
 
 	public Queen(ChessColor color, Integer x, Integer y) {
-		this.pieceName = "q";
+		this.pieceName = "Q";
 		this.x = x;
 		this.y = y;
 		this.color = color;
