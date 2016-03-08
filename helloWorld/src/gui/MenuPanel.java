@@ -14,6 +14,7 @@ import chess.ChessColor;
 import chess.Space;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
+import clientserver.ChessClient;
 import test.ChessChamp;
 
 public class MenuPanel extends JPanel {
@@ -25,6 +26,7 @@ public class MenuPanel extends JPanel {
 	private JButton findGame;
 	private JButton exit;
 	private String user;
+	private ChessClient client;
 
 	private JLabel addLabel(JPanel banner, String s) {
 		JLabel temp = new JLabel(s);
@@ -99,6 +101,15 @@ public class MenuPanel extends JPanel {
 	public JButton getExitButton() {
 		return exit;
 	}
+	
+	 public ChessClient getClient()
+	 {
+		 return client;
+	 }
+	 public void setClient(ChessClient cc)
+	 {
+		 client = cc;
+	 }
 
 	private class FindGameListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {

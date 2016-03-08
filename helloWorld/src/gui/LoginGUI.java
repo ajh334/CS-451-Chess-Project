@@ -12,6 +12,7 @@ import chess.ChessColor;
 import chess.Space;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
+import clientserver.ChessClient;
 import test.ChessChamp;
 import java.sql.*;
 
@@ -26,6 +27,13 @@ public class LoginGUI implements GUI
 {
   panel = new LoginPanel();
 }
+ 
+ public LoginGUI(ChessClient cc)
+ {
+	 panel = new LoginPanel();
+	 panel.setClient(cc);
+	 
+ }
 
 @Override
 public JPanel getPanel() 
