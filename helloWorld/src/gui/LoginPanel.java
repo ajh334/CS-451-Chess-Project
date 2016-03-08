@@ -17,6 +17,7 @@ import chess.ChessColor;
 import chess.Space;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
+import clientserver.ChessClient;
 import test.ChessChamp;
 
 
@@ -29,6 +30,7 @@ public class LoginPanel extends JPanel
 	private JLabel error;
 	private JTextField username;
 	private JButton login;
+	private ChessClient client;
 	
 
  public JLabel addLabel(JPanel banner, String s)
@@ -139,6 +141,15 @@ public class LoginPanel extends JPanel
 	 return welcome;
  }
  
+ public ChessClient getClient()
+ {
+	 return client;
+ }
+ public void setClient(ChessClient cc)
+ {
+	 client = cc;
+ }
+ 
  public Boolean checkUserName(Statement st, ResultSet rs, String usr, int ctr) throws SQLException
  {
 	 if(!rs.next())
@@ -220,8 +231,7 @@ public class LoginPanel extends JPanel
 			{
 			error.setForeground(Color.GREEN);
 			error.setText("Authorized. Logging in...");
-			MenuGUI menu = new MenuGUI(user);
-	    	ChessChamp.f.dispose();
+			MenuGUI menu = new MenuGUI(user, client);
 	    	frameMenu.setSize(805,525);
 	    	frameMenu.setLocationByPlatform(true);
 	    	frameMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

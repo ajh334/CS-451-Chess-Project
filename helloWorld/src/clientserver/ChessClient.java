@@ -21,6 +21,9 @@ import org.json.JSONObject;
 
 import chess.BoardState;
 import gui.BoardGUI;
+import gui.GUI;
+import gui.LoginGUI;
+import gui.MenuGUI;
 
 /**
  * A client for the TicTacToe game, modified and extended from the
@@ -42,10 +45,11 @@ import gui.BoardGUI;
  */
 public class ChessClient {
 
-    private JFrame frame = new JFrame("Tic Tac Toe");
+    private JFrame f = new JFrame("Chess Champ");
     private JLabel messageLabel = new JLabel("");
     private ImageIcon icon;
     private ImageIcon opponentIcon;
+    
 
     private Square[] board = new Square[9];
     private Square currentSquare;
@@ -54,10 +58,10 @@ public class ChessClient {
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
+    
 
     /**
-     * Constructs the client by connecting to a server, laying out the
-     * GUI and registering GUI listeners.
+     * Constructs the client by connecting to a server
      */
     public ChessClient(String serverAddress) throws Exception {
 
@@ -66,24 +70,6 @@ public class ChessClient {
         in = new BufferedReader(new InputStreamReader(
             socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
-
-        // Layout GUI
-        messageLabel.setBackground(Color.lightGray);
-        frame.getContentPane().add(messageLabel, "South");
-
-        JPanel boardPanel = new JPanel();
-        boardPanel.setBackground(Color.black);
-        boardPanel.setLayout(new GridLayout(3, 3, 2, 2));
-        for (int i = 0; i < board.length; i++) {
-            final int j = i;
-            board[i] = new Square();
-            board[i].addMouseListener(new MouseAdapter() {
-                public void mousePressed(MouseEvent e) {
-                    currentSquare = board[j];
-                    out.println("MOVE" + j);}});
-            boardPanel.add(board[i]);
-        }
-        frame.getContentPane().add(boardPanel, "Center");
     }
     
     public boolean findGame() throws Exception{ 
@@ -113,7 +99,7 @@ public class ChessClient {
                 char mark = response.charAt(8);
                 icon = new ImageIcon(mark == 'X' ? "x.gif" : "o.gif");
                 opponentIcon  = new ImageIcon(mark == 'X' ? "o.gif" : "x.gif");
-                frame.setTitle("Tic Tac Toe - Player " + mark);
+                f.setTitle("Tic Tac Toe - Player " + mark);
             }
             while (true) {
                 response = in.readLine();
@@ -152,11 +138,11 @@ public class ChessClient {
     }
 
     private boolean wantsToPlayAgain() {
-        int response = JOptionPane.showConfirmDialog(frame,
+        int response = JOptionPane.showConfirmDialog(f,
             "Want to play again?",
-            "Tic Tac Toe is Fun Fun Fun",
+            "Chess Champ",
             JOptionPane.YES_NO_OPTION);
-        frame.dispose();
+        f.dispose();
         return response == JOptionPane.YES_OPTION;
     }
 
@@ -194,9 +180,9 @@ public class ChessClient {
         
         while (true) {
             client.play();
-            if (!client.wantsToPlayAgain()) {
-                break;
-            }
+            //if (!client.wantsToPlayAgain()) {
+                //break;
+            //}
         }
     }
 }

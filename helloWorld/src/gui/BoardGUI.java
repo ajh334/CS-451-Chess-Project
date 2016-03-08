@@ -300,7 +300,6 @@ public class BoardGUI {
 		return pieces;
 	}
 
-
 	public void movePiece(Piece piece, Integer x, Integer y) {
 		Integer pieceX = piece.getX();
 		Integer pieceY = piece.getY();
@@ -329,7 +328,7 @@ public class BoardGUI {
 				currentPieceSpot[0] = piece.getX();
 				currentPieceSpot[1] = piece.getY();
 				currentPiece = piece;
-				disablePieces();
+				disablePieces(piece);
 			} else if(currentPiece.equals(piece) && piece.getX().equals(currentPieceOldSpot[0]) 
 					&& piece.getY().equals(currentPieceOldSpot[1])) {
 				currentPiece = null;
@@ -420,7 +419,8 @@ public class BoardGUI {
     			}
     		});
 		} else if ((piece.getColor().isWhite() && y == 0) || (!piece.getColor().isWhite() && y == 7)){
-//			Piece p = getPawnPromotion(piece.getColor(), x, y);
+			System.out.println("Got to pawn promotion");
+			Piece p = getPawnPromotion(piece.getColor(), x, y);
 			pawnPromotion(pawn, x, y, pieceX, pieceY);
         	spaces[x][y].addActionListener(new ActionListener() {
     			@Override
@@ -449,6 +449,23 @@ public class BoardGUI {
     	spaces[x][y].setPiece(piece);
     }
     
+    public Piece getPawnPromotion(ChessColor c, int x, int y)
+    {
+    	Object[] values = {"Rook", "Queen", "King", "Knight", "Bishop"};
+
+    	int selected = JOptionPane.showOptionDialog(null, "What is the target Nicotine level?", "Selection", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, values, values[0]);
+    	
+    	switch(selected)
+    	{
+    	case 0: currentPiece = new Rook(c, x, y);
+    	case 1: currentPiece = new Queen(c, x, y);
+    	case 2: currentPiece = new King(c, x, y);
+    	case 3: currentPiece = new Knight(c, x, y);
+    	case 4: currentPiece = new Bishop(c, x, y);
+    	}
+    	return currentPiece;
+    }
+    
     public void changeTurn() {
 		deHighlightButtons();
 		this.whiteTurn = !this.whiteTurn;
@@ -460,7 +477,7 @@ public class BoardGUI {
 		enablePieces();
     }
     
-	public void disablePieces() {
+/*	public void disablePieces() {
 		if (currentPiece != null) {
 			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
@@ -470,7 +487,7 @@ public class BoardGUI {
 				}
 			}
 		}
-	}
+	}*/
 	
 	public void enablePieces() {
     	if(whiteTurn && playerIsWhite) {
@@ -508,7 +525,18 @@ public class BoardGUI {
     			}
     		}
     	}
-	}
+    }
+    
+   
+    public void disablePieces(Piece piece) {
+    	for(int i = 0; i < 8; i++) {
+    		for(int j = 0; j < 8; j++) {
+    			if(i != piece.getX() && j != piece.getY()){
+        			spaces[i][j].removeAllActionListeners();
+    			}
+    		}
+    	}
+    }
     
     public final JComponent getGUI() {
     	return gui;
