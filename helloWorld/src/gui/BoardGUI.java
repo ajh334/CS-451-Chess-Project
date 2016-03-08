@@ -396,7 +396,8 @@ public class BoardGUI {
     			}
     		});
 		} else if ((piece.getColor().isWhite() && y == 0) || (!piece.getColor().isWhite() && y == 7)){
-//			Piece p = getPawnPromotion(piece.getColor(), x, y);
+			System.out.println("Got to pawn promotion");
+			Piece p = getPawnPromotion(piece.getColor(), x, y);
 			pawnPromotion(pawn, x, y, pieceX, pieceY);
         	spaces[x][y].addActionListener(new ActionListener() {
     			@Override
@@ -424,6 +425,23 @@ public class BoardGUI {
     	piece.setX(x);
     	piece.setY(y);
     	spaces[x][y].setPiece(piece);
+    }
+    
+    public Piece getPawnPromotion(ChessColor c, int x, int y)
+    {
+    	Object[] values = {"Rook", "Queen", "King", "Knight", "Bishop"};
+
+    	int selected = JOptionPane.showOptionDialog(null, "What is the target Nicotine level?", "Selection", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, values, values[0]);
+    	
+    	switch(selected)
+    	{
+    	case 0: currentPiece = new Rook(c, x, y);
+    	case 1: currentPiece = new Queen(c, x, y);
+    	case 2: currentPiece = new King(c, x, y);
+    	case 3: currentPiece = new Knight(c, x, y);
+    	case 4: currentPiece = new Bishop(c, x, y);
+    	}
+    	return currentPiece;
     }
     
     public void changeTurn() {
@@ -468,6 +486,7 @@ public class BoardGUI {
     	}
     }
     
+   
     public void disablePieces(Piece piece) {
     	for(int i = 0; i < 8; i++) {
     		for(int j = 0; j < 8; j++) {
