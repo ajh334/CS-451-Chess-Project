@@ -191,6 +191,8 @@ public class LoginPanel extends JPanel
    
  private class LoginListener implements ActionListener
 {
+	   String password = "D4vinci1337";
+	   String user = "root";
     public void actionPerformed(ActionEvent e)
    {
     	login.setActionCommand("UnAuth");
@@ -212,7 +214,7 @@ public class LoginPanel extends JPanel
     	
     	try 
     	{
-			con = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "D4vinci1337");			
+			con = DriverManager.getConnection("jdbc:mysql://localhost/test", this.user, this.password);			
 			Statement st = con.createStatement();
 			
 			ResultSet rs = st.executeQuery("select username from login");
@@ -239,6 +241,7 @@ public class LoginPanel extends JPanel
 			frameMenu.pack();
 			frameMenu.setVisible(true);
 			}
+			con.close();
 		} 
     	catch (SQLException e1) 
     	{

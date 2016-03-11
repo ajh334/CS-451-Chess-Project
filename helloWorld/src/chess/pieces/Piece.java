@@ -14,6 +14,7 @@ public class Piece {
 	protected Integer x;
 	protected Integer y;
 	protected Boolean hasMoved = false;
+	protected Integer[] originalSpace = new Integer[2];
 
 	public ChessColor getColor() {
 		return color;
@@ -61,5 +62,13 @@ public class Piece {
 
 	public void setHasMoved(Boolean hasMoved) {
 		this.hasMoved = hasMoved;
+	}
+
+	public Integer[] getOriginalSpace() {
+		return originalSpace;
+	}
+
+	public void setOriginalSpace(Integer[] originalSpace) {
+		this.originalSpace = originalSpace;
 	}
 }

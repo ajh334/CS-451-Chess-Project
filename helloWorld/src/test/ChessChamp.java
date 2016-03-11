@@ -18,7 +18,7 @@ public class ChessChamp {
             {
             	
                 //BoardGUI gui = new BoardGUI();
-            	 String serverAddress = (args.length == 0) ? "localhost" : args[1];
+            	 String serverAddress = "2601:41:4000:5a26:e5ec:4349:6a5b:3ebb" /*(args.length == 0) ? "localhost" : args[1]*/;
                  try {
 					ChessClient client = new ChessClient(serverAddress);
 					GUI gui = new LoginGUI(client);

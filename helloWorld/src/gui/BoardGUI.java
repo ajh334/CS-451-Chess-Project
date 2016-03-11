@@ -269,18 +269,26 @@ public class BoardGUI {
     	if(state.getBoardCheck() == BoardCheck.CHECK) {
     		check = true;
     	}
-    	Integer x = b.getPiece().getX();
-    	Integer y = b.getPiece().getY();
+    	Integer x = 0;
+    	Integer y = 0;
+    	if(b.isPiece()) {
+    		x = b.getPiece().getX();
+    		y = b.getPiece().getY();
+    	}
     	if(currentPiece != null && currentPiece.equals(b.getPiece())) {
     		b.getPiece().setX(currentPieceOldSpot[0]);
     		b.getPiece().setY(currentPieceOldSpot[1]);
     	}
+    	if(b.isPiece()) {
+    		moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(spaces), b.getPiece(), check, false);
+    		b.getPiece().setX(x);
+    		b.getPiece().setY(y);
+    	} else {
+    		moveList.add(currentPieceOldSpot);
+    	}
     	
-    	moveList = (ArrayList<Integer[]>) mv.getPossibleMoves(addPieces(spaces), b.getPiece(), check, false);
     	
 
-		b.getPiece().setX(x);
-		b.getPiece().setY(y);
     	if(currentPieceOldSpot[0] != null && currentPiece != null && currentPiece.equals(b.getPiece())) {
     		moveList.add(currentPieceOldSpot);
     	}
@@ -336,6 +344,15 @@ public class BoardGUI {
 				enablePieces();
 			}
 			this.state.setBoardCheck(mv.isSinglePieceCheck(pieces, piece));
+		} else {
+			spaces[x][y].addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					if(spaces[x][y].getPiece() != null) {
+						addHighlightListener(spaces[x][y]);
+					}
+				}
+            });
 		}
 	}
     
@@ -496,12 +513,11 @@ public class BoardGUI {
     				if(spaces[i][j].isPiece() && !spaces[i][j].getPiece().getColor().isWhite()) {
     					spaces[i][j].removeAllActionListeners();
     				} else if (spaces[i][j].isPiece() && spaces[i][j].getPiece().getColor().isWhite()){
-    					int x = i;
-    					int y = j;
-    		        	spaces[i][j].addActionListener(new ActionListener() {
+    					Space b = spaces[i][j];
+    		        	b.addActionListener(new ActionListener() {
     		    			@Override
     		    			public void actionPerformed(ActionEvent arg0) {
-    							addHighlightListener(spaces[x][y]);
+    							addHighlightListener(b);
     		    			}
     		    		});
         			}
@@ -513,12 +529,11 @@ public class BoardGUI {
     				if(spaces[i][j].isPiece() && spaces[i][j].getPiece().getColor().isWhite()) {
     					spaces[i][j].removeAllActionListeners();
     				} else if (spaces[i][j].isPiece() && !spaces[i][j].getPiece().getColor().isWhite()){
-    					int x = i;
-    					int y = j;
-    		        	spaces[i][j].addActionListener(new ActionListener() {
+    					Space b = spaces[i][j];
+    		        	b.addActionListener(new ActionListener() {
     		    			@Override
     		    			public void actionPerformed(ActionEvent arg0) {
-    							addHighlightListener(spaces[x][y]);
+    							addHighlightListener(b);
     		    			}
     		    		});
         			}
@@ -531,7 +546,8 @@ public class BoardGUI {
     public void disablePieces(Piece piece) {
     	for(int i = 0; i < 8; i++) {
     		for(int j = 0; j < 8; j++) {
-    			if(i != piece.getX() && j != piece.getY()){
+    			if(i == piece.getX() && j == piece.getY()){
+    			} else {
         			spaces[i][j].removeAllActionListeners();
     			}
     		}

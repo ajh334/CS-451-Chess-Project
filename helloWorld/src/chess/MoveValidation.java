@@ -14,8 +14,8 @@ public class MoveValidation {
 	
 	List<Integer[]> checkMoveList;
 	
-	public List<Integer[]> getPossibleMoves(Piece[][] spaces, Piece piece, Boolean isCheck, Boolean isCheckMove) {
-		List<Integer[]> movesList = new ArrayList<Integer[]>();
+	public ArrayList<Integer[]> getPossibleMoves(Piece[][] spaces, Piece piece, Boolean isCheck, Boolean isCheckMove) {
+		ArrayList<Integer[]> movesList = new ArrayList<Integer[]>();
 		switch(piece.getPieceName()) {
 		case "P": 
 			movesList = getPossibleMovesPawn(spaces, piece, movesList, isCheck);
@@ -37,6 +37,8 @@ public class MoveValidation {
 			break;
 		}
 		if(piece != null && !isCheckMove) {
+			int tempX = piece.getX();
+			int tempY = piece.getY();
 			for(int i = 0; i < movesList.size(); i++) {
 				Piece[][] temp = spaces;
 				Piece oldPiece = piece;
@@ -46,12 +48,15 @@ public class MoveValidation {
 					movesList.remove(i);
 					i = i--;
 				}
+				piece = oldPiece;
 			}
+			piece.setX(tempX);
+			piece.setY(tempY);
 		}
 		return movesList;
 	}
 	
-	public List<Integer[]> getPossibleMovesPawn(Piece[][] spaces, Piece piece, List<Integer[]> movesList, Boolean isCheck) {
+	public ArrayList<Integer[]> getPossibleMovesPawn(Piece[][] spaces, Piece piece, ArrayList<Integer[]> movesList, Boolean isCheck) {
 		Pawn pawn = (Pawn) piece;
 		if(piece.getColor().isWhite()) {
 			movesList = getWhitePawnPossibleMoves(spaces, movesList, pawn, isCheck);
@@ -61,7 +66,7 @@ public class MoveValidation {
 		return movesList;
 	}
 	
-	public List<Integer[]> getWhitePawnPossibleMoves(Piece[][] spaces, List<Integer[]> movesList, Pawn pawn, Boolean isCheck) {
+	public ArrayList<Integer[]> getWhitePawnPossibleMoves(Piece[][] spaces, ArrayList<Integer[]> movesList, Pawn pawn, Boolean isCheck) {
 		Integer y1 = pawn.getY()-1;
 		Integer y3 = pawn.getY();
 		Integer x1 = pawn.getX()-1;
@@ -140,7 +145,7 @@ public class MoveValidation {
 		return movesList;
 	}
 	
-	public List<Integer[]> getBlackPawnPossibleMoves(Piece[][] spaces, List<Integer[]> movesList, Pawn pawn, Boolean isCheck) {
+	public ArrayList<Integer[]> getBlackPawnPossibleMoves(Piece[][] spaces, ArrayList<Integer[]> movesList, Pawn pawn, Boolean isCheck) {
 		Integer y1 = pawn.getY()+1;
 		Integer y2 = pawn.getY()+2;
 		Integer y3 = pawn.getY();
@@ -156,7 +161,7 @@ public class MoveValidation {
 				temp[0] = x3;
 				temp[1] = y1;
 				movesList.add(temp);
-				if (!pawn.hasMoved()) {
+				if (!pawn.hasMoved() && y2 <= 7) {
 					Piece forward2 = spaces[x3][y2];
 					if (forward2 == null) {
 						temp = new Integer[2];
@@ -220,7 +225,7 @@ public class MoveValidation {
 	}
 	
 	
-	public List<Integer[]> getPossibleMovesBishop(Piece[][] spaces, Piece piece, List<Integer[]> movesList, Boolean isCheck) {
+	public ArrayList<Integer[]> getPossibleMovesBishop(Piece[][] spaces, Piece piece, ArrayList<Integer[]> movesList, Boolean isCheck) {
 		int pieceX = piece.getX();
 		int pieceY = piece.getY();
 		Integer[] coords = new Integer[2];
@@ -331,7 +336,7 @@ public class MoveValidation {
 		return movesList;
 	}
 	
-	public List<Integer[]> getPossibleMovesKnight(Piece[][] spaces, Piece piece, List<Integer[]> movesList, Boolean isCheck) {
+	public ArrayList<Integer[]> getPossibleMovesKnight(Piece[][] spaces, Piece piece, ArrayList<Integer[]> movesList, Boolean isCheck) {
 	    final int[][] offsets = {{1,-2},{2,-1},{2,1},{1,2},{-1,2},
 	            {-2,1},{-2,-1},{-1,-2}};
 		int pieceX = piece.getX();
@@ -361,7 +366,7 @@ public class MoveValidation {
 		return movesList;
 	}
 	
-	public List<Integer[]> getPossibleMovesKing(Piece[][] spaces, Piece piece, List<Integer[]> movesList, Boolean isCheck) {
+	public ArrayList<Integer[]> getPossibleMovesKing(Piece[][] spaces, Piece piece, ArrayList<Integer[]> movesList, Boolean isCheck) {
 		King king = (King) piece;
 	    final int[][] offsets = {{1,1},{-1,-1},{1, 0},{-1,0},{-1,1},
 	            {1,-1},{0,-1},{0,1}};
@@ -432,13 +437,13 @@ public class MoveValidation {
 		return movesList;
 	}
 	
-	public List<Integer[]> getPossibleMovesQueen(Piece[][] spaces, Piece piece, List<Integer[]> movesList, Boolean isCheck) {
+	public ArrayList<Integer[]> getPossibleMovesQueen(Piece[][] spaces, Piece piece, ArrayList<Integer[]> movesList, Boolean isCheck) {
 		movesList = getPossibleMovesRook(spaces, piece, movesList, isCheck);
 		movesList = getPossibleMovesBishop(spaces, piece, movesList, isCheck);
 		return movesList;
 	}
 	
-	public List<Integer[]> getPossibleMovesRook(Piece[][] spaces, Piece piece, List<Integer[]> movesList, Boolean isCheck) {
+	public ArrayList<Integer[]> getPossibleMovesRook(Piece[][] spaces, Piece piece, ArrayList<Integer[]> movesList, Boolean isCheck) {
 		int pieceX = piece.getX();
 		int pieceY = piece.getY();
 		Integer[] coords = new Integer[2];
@@ -524,7 +529,7 @@ public class MoveValidation {
 	
 	public BoardCheck isSinglePieceCheck(Piece[][] spaces, Piece piece) {
 		BoardCheck bc = BoardCheck.NO_CHECK;
-		List<Integer[]> moveList = getPossibleMoves(spaces, piece, false, false);
+		ArrayList<Integer[]> moveList = getPossibleMoves(spaces, piece, false, false);
 		Piece king = findKing(spaces, new ChessColor(!piece.getColor().isWhite()));
 		Integer[] kingPos = new Integer[2];
 		kingPos[0] = king.getX();
@@ -537,8 +542,8 @@ public class MoveValidation {
 	}
 	
 	public BoardCheck isCheck(Piece[][] spaces, ChessColor color) {
-		List<Integer[]> moveList = new ArrayList<Integer[]>();
-		List<Integer[]> allEnemyMoves = new ArrayList<Integer[]>();
+		ArrayList<Integer[]> moveList = new ArrayList<Integer[]>();
+		ArrayList<Integer[]> allEnemyMoves = new ArrayList<Integer[]>();
 		List<List<Piece>> pieceList = getPieceArray(spaces, color, true);
 		List<Piece> friendlyPieceList = pieceList.get(1);
 		List<Piece> opposingPieceList = pieceList.get(0);
@@ -563,9 +568,9 @@ public class MoveValidation {
 
 	public BoardCheck isCheckmate(Piece[][] spaces, Piece piece) {
 		ChessColor color = new ChessColor(!piece.getColor().isWhite());
-		List<Integer[]> tempMoveList = new ArrayList<Integer[]>();
-		List<Integer[]> moveList = new ArrayList<Integer[]>();
-		List<Integer[]> allEnemyMoves = new ArrayList<Integer[]>();
+		ArrayList<Integer[]> tempMoveList = new ArrayList<Integer[]>();
+		ArrayList<Integer[]> moveList = new ArrayList<Integer[]>();
+		ArrayList<Integer[]> allEnemyMoves = new ArrayList<Integer[]>();
 		List<List<Piece>> pieceList = getPieceArray(spaces, color, true);
 		List<Piece> friendlyPieceList = pieceList.get(1);
 		List<Piece> opposingPieceList = pieceList.get(0);
@@ -592,7 +597,7 @@ public class MoveValidation {
 	}
 	
 	public Boolean isCheckMove(Piece[][] spaces, ChessColor color, Piece piece, Piece oldPiece) {
-		List<Integer[]> moveList = new ArrayList<Integer[]>();
+		ArrayList<Integer[]> moveList = new ArrayList<Integer[]>();
 		Piece[][] pieces = spaces.clone();
 		pieces[oldPiece.getX()][oldPiece.getY()] = null;
 		pieces[piece.getX()][piece.getY()] = piece;
