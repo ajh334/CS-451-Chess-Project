@@ -173,16 +173,12 @@ public class ChessClient {
         Boolean playerIsWhite = false;
         while (true) {
         	playerIsWhite = client.findGame();
+        	BoardGUI bg = new BoardGUI(playerIsWhite);
+            client.play();
             if (!client.wantsToPlayAgain()) {
                 break;
             }
         }
         
-        while (true) {
-            client.play();
-            //if (!client.wantsToPlayAgain()) {
-                //break;
-            //}
-        }
     }
 }
